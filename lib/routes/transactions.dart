@@ -1,4 +1,5 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/widgets/header.dart';
 import 'package:credit_card_dashboard/widgets/overallPadding.dart';
 import 'package:flutter/material.dart';
 
@@ -22,12 +23,7 @@ class Transactions extends StatelessWidget {
             child: OverallPadding(
               child: Column(
                 children: [
-                  Row(
-                    children: const [
-                      Text("LOGO HERE"),
-                      Text("Page Title Here"),
-                    ],
-                  ),
+                  const Header(title: "Transactions"),
                   Column(
                     children: const [
                       Text("Transactions"),
