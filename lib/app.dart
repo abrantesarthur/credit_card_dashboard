@@ -2,6 +2,9 @@ import 'package:credit_card_dashboard/screens/transactions.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatefulWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
   _AppState createState() => _AppState();
 }
 
@@ -25,7 +28,7 @@ class _AppState extends State<App> {
         // if Home is pushed
         if (settings.name == Transactions.routeName) {
           return MaterialPageRoute(builder: (context) {
-            return Transactions();
+            return const Transactions();
           });
         }
         return null;
