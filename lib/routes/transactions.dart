@@ -1,4 +1,5 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:credit_card_dashboard/widgets/horizontalDivider.dart';
 import 'package:credit_card_dashboard/widgets/layout.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class Transactions extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 15),
-                          const Text("data"),
+                          const HorizontalBar(fill: 0.5, width: 300),
                         ],
                       ),
                     ),
