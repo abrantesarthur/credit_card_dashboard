@@ -5,4 +5,5 @@ class AppColors extends Color {
 
   static const background = Color(0XFFF6F6F6);
   static const gray = Color(0XFF828282);
+  static const orange = Color(0xFFF68659);
 }

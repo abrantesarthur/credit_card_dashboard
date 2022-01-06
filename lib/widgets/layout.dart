@@ -2,6 +2,7 @@ import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/widgets/header.dart';
 import 'package:credit_card_dashboard/widgets/leftPanel.dart';
 import 'package:credit_card_dashboard/widgets/overallPadding.dart';
+import 'package:credit_card_dashboard/widgets/rightPanel.dart';
 import 'package:flutter/material.dart';
 
 class Layout extends StatelessWidget {
@@ -19,6 +20,7 @@ class Layout extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final leftPanelWidth = screenWidth / 8;
+    final rightPanelWidth = screenWidth - screenWidth / 8 - screenWidth / 20;
 
     return LayoutBuilder(builder: (
       BuildContext context,
@@ -39,9 +41,10 @@ class Layout extends StatelessWidget {
                   SizedBox(height: screenHeight / 20),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       LeftPanel(width: leftPanelWidth),
-                      child,
+                      RightPanel(width: rightPanelWidth, child: child)
                     ],
                   )
                 ],
