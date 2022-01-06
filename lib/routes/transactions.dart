@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Transactions extends StatelessWidget {
-  static String routeName = "Transactions";
+  static String routeName = "/transactions";
 
   const Transactions({Key? key}) : super(key: key);
 
