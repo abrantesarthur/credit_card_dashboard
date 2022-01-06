@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
   final String title;
+  final double? titleLeftPadding;
 
   const Header({
     Key? key,
     required this.title,
+    this.titleLeftPadding,
   }) : super(key: key);
 
   @override
@@ -18,7 +20,8 @@ class Header extends StatelessWidget {
       BoxConstraints constraints,
     ) {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,19 +30,35 @@ class Header extends StatelessWidget {
                 onTap: () {},
                 child: Image.asset(
                   "images/logo-horizontal.png",
-                  width: screenWidth /
-                      (constraints.maxWidth > 760
-                          ? 10
-                          : constraints.maxWidth >= 501
-                              ? 4
-                              : 3),
+                  width: constraints.maxWidth > 760
+                      ? 100
+                      : constraints.maxWidth >= 501
+                          ? 80
+                          : 50,
                 ),
               ),
-              SizedBox(height: screenHeight / 100),
-              const Text("Bright Future Inc."),
+              SizedBox(height: screenHeight / 80),
+              const Text(
+                "Bright Future Inc.",
+                style: TextStyle(
+                  fontFamily: "Inter",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
+              ),
             ],
           ),
-          Text(title),
+          SizedBox(
+            width: titleLeftPadding ?? screenWidth / 10,
+          ),
+          Text(
+            title,
+            style: const TextStyle(
+              fontFamily: "Inter",
+              fontWeight: FontWeight.w600,
+              fontSize: 28,
+            ),
+          ),
         ],
       );
     });
