@@ -1,5 +1,5 @@
 import 'package:credit_card_dashboard/configure_web.dart';
-import 'package:credit_card_dashboard/screens/transactions.dart';
+import 'package:credit_card_dashboard/routes/transactions.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Venni',
       initialRoute: Transactions.routeName,
-      routes: {Transactions.routeName: (context) => const Transactions()},
+      routes: {
+        Transactions.routeName: (context) => const Transactions(),
+      },
     );
   }
 }
