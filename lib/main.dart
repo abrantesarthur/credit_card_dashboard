@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Venni',
+      title: 'Brex Dashboard',
+      theme: ThemeData(fontFamily: "Inter"),
       initialRoute: Transactions.routeName,
       routes: {
         Transactions.routeName: (context) => const Transactions(),

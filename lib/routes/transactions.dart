@@ -1,6 +1,4 @@
-import 'package:credit_card_dashboard/colors.dart';
-import 'package:credit_card_dashboard/widgets/header.dart';
-import 'package:credit_card_dashboard/widgets/overallPadding.dart';
+import 'package:credit_card_dashboard/widgets/layout.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatelessWidget {
@@ -10,39 +8,13 @@ class Transactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (
-      BuildContext context,
-      BoxConstraints constraints,
-    ) {
-      // desktop
-      if (constraints.maxWidth >= 760) {
-        return Scaffold(
-          body: Container(
-            color: AppColors.background,
-            alignment: Alignment.topCenter,
-            child: OverallPadding(
-              child: Column(
-                children: [
-                  const Header(title: "Transactions"),
-                  Column(
-                    children: const [
-                      Text("Transactions"),
-                    ],
-                  ),
-                  Column(
-                    children: const [
-                      Text("Transactions"),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }
-
-      // TODO: fix
-      return Container();
-    });
+    return Layout(
+      routeTitle: "Transactions",
+      child: Container(
+        width: 200,
+        height: 200,
+        color: Colors.blue,
+      ),
+    );
   }
 }
