@@ -22,7 +22,7 @@ class Transaction extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              transaction.date,
+              transaction.timestamp.getDate(),
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
@@ -57,7 +57,7 @@ class Transaction extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              transaction.amount.toString(),
+              transaction.amount.getString(),
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
