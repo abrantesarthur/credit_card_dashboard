@@ -2,6 +2,14 @@ import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:flutter/material.dart';
 
+extension CurrencyExtension on double {
+  String getAmountSpent() {
+    return (this < 0 ? "-" : "+") +
+        "\$" +
+        ((this * 100).round() / 100).toString();
+  }
+}
+
 extension MTExtension on MerchantType {
   Color getColor() {
     switch (this) {
