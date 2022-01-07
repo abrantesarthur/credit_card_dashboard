@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 class Points extends StatelessWidget {
-  final String points;
-  const Points({Key? key, required this.points}) : super(key: key);
+  final int points;
+  final Color backgroundColor;
+  const Points({
+    Key? key,
+    required this.points,
+    required this.backgroundColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Padding(

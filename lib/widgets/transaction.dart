@@ -1,5 +1,6 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
+import 'package:credit_card_dashboard/widgets/points.dart';
 import 'package:flutter/material.dart';
 
 class Transaction extends StatelessWidget {
@@ -40,22 +41,9 @@ class Transaction extends StatelessWidget {
             flex: 1,
             child: Align(
               alignment: Alignment.centerLeft,
-              // extranct to points widget
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    transaction.pointsEarned.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              child: Points(
+                points: transaction.pointsEarned,
+                backgroundColor: getMerchantColor(transaction.merchant.type),
               ),
             ),
           ),
@@ -69,5 +57,20 @@ class Transaction extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color getMerchantColor(MerchantType? t) {
+    switch (t) {
+      case MerchantType.dining:
+        return AppColors.diningColor;
+      case MerchantType.rideSharing:
+        return AppColors.ridesharingColor;
+      case MerchantType.tool:
+        return AppColors.toolColor;
+      case MerchantType.trip:
+        return AppColors.tripColor;
+      default:
+        return Colors.black;
+    }
   }
 }

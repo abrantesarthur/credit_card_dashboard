@@ -1,16 +1,16 @@
-enum MerchantType { rideSharing, restaurant, trip, tool }
+enum MerchantType { rideSharing, dining, trip, tool }
 
 extension MerchantTypeExtension on MerchantType {
   static MerchantType? fromString(String t) {
     switch (t) {
       case "ride_sharing":
         return MerchantType.rideSharing;
-      case "restaurant":
-        return MerchantType.rideSharing;
+      case "dining":
+        return MerchantType.dining;
       case "trip":
-        return MerchantType.rideSharing;
+        return MerchantType.trip;
       case "tool":
-        return MerchantType.rideSharing;
+        return MerchantType.tool;
     }
   }
 }
