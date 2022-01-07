@@ -1,5 +1,5 @@
 import 'package:credit_card_dashboard/configure_web.dart';
-import 'package:credit_card_dashboard/routes/transactions.dart';
+import 'package:credit_card_dashboard/routes/dashboard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Brex Dashboard',
       theme: ThemeData(fontFamily: "Inter"),
-      initialRoute: Transactions.routeName,
+      initialRoute: Dashboard.routeName,
       routes: {
-        Transactions.routeName: (context) => const Transactions(),
+        Dashboard.routeName: (context) => const Dashboard(),
       },
     );
   }

@@ -1,18 +1,27 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/routes/transactions.dart';
 import 'package:credit_card_dashboard/widgets/header.dart';
 import 'package:credit_card_dashboard/widgets/leftPanel.dart';
 import 'package:credit_card_dashboard/widgets/overallPadding.dart';
 import 'package:flutter/material.dart';
 
-class Layout extends StatelessWidget {
-  final String routeTitle;
-  final Widget child;
+class Dashboard extends StatefulWidget {
+  static String routeName = "/dashboard";
 
-  const Layout({
-    Key? key,
-    required this.routeTitle,
-    required this.child,
-  }) : super(key: key);
+  const Dashboard({Key? key}) : super(key: key);
+
+  @override
+  DashboardState createState() => DashboardState();
+}
+
+class DashboardState extends State<Dashboard> {
+  late int currentIndex;
+
+  @override
+  void initState() {
+    currentIndex = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +43,7 @@ class Layout extends StatelessWidget {
               child: Column(
                 children: [
                   Header(
-                    title: routeTitle,
+                    title: currentIndex == 0 ? "Transactions" : "not",
                     leftFlex: leftFlex,
                     rightFlex: rightFlex,
                   ),
@@ -43,11 +52,22 @@ class Layout extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: leftFlex,
-                        child: LeftPanel(),
+                        child: LeftPanel(
+                          onIndexChanged: (int index) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                        ),
                       ),
-                      Expanded(flex: rightFlex, child: child),
+                      Expanded(
+                        flex: rightFlex,
+                        child: currentIndex == 0
+                            ? const Transactions()
+                            : Container(),
+                      ),
                     ],
                   )
                 ],
