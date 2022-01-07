@@ -1,15 +1,6 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:flutter/material.dart';
 
-enum merchantType { rideSharing, restaurant, trip, tool }
-
-class Merchant {
-  merchantType type;
-  String name;
-
-  Merchant(this.type, this.name);
-}
-
 class Transaction extends StatelessWidget {
   final String date;
   final Merchant merchant;
