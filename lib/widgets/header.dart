@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
   final String title;
-  final double? leftPanelWidth;
+  final int leftFlex;
+  final int rightFlex;
 
   const Header({
     Key? key,
     required this.title,
-    this.leftPanelWidth,
+    required this.leftFlex,
+    required this.rightFlex,
   }) : super(key: key);
 
   @override
@@ -22,8 +24,8 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          SizedBox(
-            width: leftPanelWidth,
+          Expanded(
+            flex: leftFlex,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,11 +52,14 @@ class Header extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 28,
+          Expanded(
+            flex: rightFlex,
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 28,
+              ),
             ),
           ),
         ],

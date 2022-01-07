@@ -2,7 +2,6 @@ import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/widgets/header.dart';
 import 'package:credit_card_dashboard/widgets/leftPanel.dart';
 import 'package:credit_card_dashboard/widgets/overallPadding.dart';
-import 'package:credit_card_dashboard/widgets/rightPanel.dart';
 import 'package:flutter/material.dart';
 
 class Layout extends StatelessWidget {
@@ -17,15 +16,15 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final leftPanelWidth = screenWidth / 8;
-    final rightPanelWidth = screenWidth - screenWidth / 8 - screenWidth / 20;
+    const int leftFlex = 1;
+    const int rightFlex = 6;
 
     return LayoutBuilder(builder: (
       BuildContext context,
       BoxConstraints constraints,
     ) {
+      // desktop
       if (constraints.maxWidth >= 760) {
         return Scaffold(
           body: Container(
@@ -36,15 +35,19 @@ class Layout extends StatelessWidget {
                 children: [
                   Header(
                     title: routeTitle,
-                    leftPanelWidth: leftPanelWidth,
+                    leftFlex: leftFlex,
+                    rightFlex: rightFlex,
                   ),
                   SizedBox(height: screenHeight / 20),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      LeftPanel(width: leftPanelWidth),
-                      RightPanel(width: rightPanelWidth, child: child)
+                      const Expanded(
+                        flex: leftFlex,
+                        child: LeftPanel(),
+                      ),
+                      Expanded(flex: rightFlex, child: child),
                     ],
                   )
                 ],
@@ -54,7 +57,6 @@ class Layout extends StatelessWidget {
         );
       }
 
-      // TODO: fix
       return Container();
     });
   }
