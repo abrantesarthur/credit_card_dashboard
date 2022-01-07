@@ -1,6 +1,5 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
-import 'package:credit_card_dashboard/widgets/horizontalDivider.dart';
 import 'package:credit_card_dashboard/widgets/layout.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +64,7 @@ class Transactions extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const HorizontalDivider(height: 100),
+                  const VerticalDivider(),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(30),
@@ -92,7 +91,7 @@ class Transactions extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const HorizontalDivider(height: 100),
+                  const VerticalDivider(),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(30),
@@ -143,11 +142,7 @@ class Transactions extends StatelessWidget {
           ),
           SizedBox(height: screenHeight / 25),
           Container(
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
+            color: Colors.white,
           ),
         ],
       ),
