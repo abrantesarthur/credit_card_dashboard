@@ -1,4 +1,3 @@
-import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/points.dart';
@@ -44,7 +43,7 @@ class Transaction extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Points(
                 points: transaction.pointsEarned,
-                backgroundColor: getMerchantColor(transaction.merchant.type),
+                backgroundColor: transaction.merchant.type.getColor(),
               ),
             ),
           ),

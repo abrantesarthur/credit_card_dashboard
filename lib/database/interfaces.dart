@@ -1,7 +1,7 @@
-enum MerchantType { rideSharing, dining, trip, tool }
+enum MerchantType { rideSharing, dining, trip, tool, generic }
 
 extension MerchantTypeExtension on MerchantType {
-  static MerchantType? fromString(String t) {
+  static MerchantType fromString(String t) {
     switch (t) {
       case "ride_sharing":
         return MerchantType.rideSharing;
@@ -11,12 +11,14 @@ extension MerchantTypeExtension on MerchantType {
         return MerchantType.trip;
       case "tool":
         return MerchantType.tool;
+      default:
+        return MerchantType.generic;
     }
   }
 }
 
 class Merchant {
-  MerchantType? type;
+  MerchantType type;
   String name;
 
   Merchant({required this.type, required this.name});
