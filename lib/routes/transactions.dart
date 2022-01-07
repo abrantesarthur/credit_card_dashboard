@@ -1,6 +1,8 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:credit_card_dashboard/widgets/layout.dart';
+import 'package:credit_card_dashboard/widgets/transaction.dart';
 import 'package:credit_card_dashboard/widgets/transactionHeader.dart';
 import 'package:flutter/material.dart';
 
@@ -148,6 +150,14 @@ class Transactions extends StatelessWidget {
               children: [
                 const TransactionHeader(),
                 Container(height: 1, color: AppColors.background),
+                Transaction(
+                  transaction: TransactionType(
+                      date: "12 Jan",
+                      merchant: Merchant(
+                          type: MerchantType.rideSharing, name: "Uber"),
+                      pointsEarned: 100,
+                      amount: 10.56),
+                )
               ],
             ),
           ),

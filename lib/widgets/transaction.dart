@@ -1,19 +1,10 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:flutter/material.dart';
 
 class Transaction extends StatelessWidget {
-  final String date;
-  final Merchant merchant;
-  final int pointsEarned;
-  final double amount;
-
-  const Transaction({
-    Key? key,
-    required this.date,
-    required this.merchant,
-    required this.pointsEarned,
-    required this.amount,
-  }) : super(key: key);
+  final TransactionType transaction;
+  const Transaction({Key? key, required this.transaction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +21,8 @@ class Transaction extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              date,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColors.gray,
-              ),
+              transaction.date,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
           Expanded(
@@ -42,33 +30,40 @@ class Transaction extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  merchant.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.gray,
-                  ),
+                  transaction.merchant.name,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
               ],
             ),
           ),
           Expanded(
             flex: 1,
-            child: Text(
-              pointsEarned.toString(),
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColors.gray,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              // extranct to points widget
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    transaction.pointsEarned.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
           Expanded(
             flex: 1,
             child: Text(
-              amount.toString(),
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColors.gray,
-              ),
+              transaction.amount.toString(),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
         ],

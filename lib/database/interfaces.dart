@@ -29,21 +29,21 @@ class Merchant {
   }
 }
 
-class Transaction {
+class TransactionType {
   final String date;
   final Merchant merchant;
   final int pointsEarned;
   final double amount;
 
-  Transaction({
+  TransactionType({
     required this.date,
     required this.merchant,
     required this.pointsEarned,
     required this.amount,
   });
 
-  factory Transaction.fromJson(Map json) {
-    return Transaction(
+  factory TransactionType.fromJson(Map json) {
+    return TransactionType(
       date: json["date"],
       merchant: json["merchant"],
       pointsEarned: json["points_earned"],
