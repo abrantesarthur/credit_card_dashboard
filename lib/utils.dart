@@ -17,4 +17,19 @@ extension MTExtension on MerchantType {
         return Colors.black;
     }
   }
+
+  IconData getIcon() {
+    switch (this) {
+      case MerchantType.dining:
+        return Icons.restaurant_menu;
+      case MerchantType.rideSharing:
+        return Icons.directions_car;
+      case MerchantType.tool:
+        return Icons.settings;
+      case MerchantType.trip:
+        return Icons.airplanemode_active;
+      default:
+        return Icons.turned_in;
+    }
+  }
 }
