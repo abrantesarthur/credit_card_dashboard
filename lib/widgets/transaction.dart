@@ -1,5 +1,6 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
+import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/points.dart';
 import 'package:flutter/material.dart';
 
@@ -57,20 +58,5 @@ class Transaction extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Color getMerchantColor(MerchantType? t) {
-    switch (t) {
-      case MerchantType.dining:
-        return AppColors.diningColor;
-      case MerchantType.rideSharing:
-        return AppColors.ridesharingColor;
-      case MerchantType.tool:
-        return AppColors.toolColor;
-      case MerchantType.trip:
-        return AppColors.tripColor;
-      default:
-        return Colors.black;
-    }
   }
 }
