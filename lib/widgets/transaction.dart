@@ -1,3 +1,4 @@
+import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/points.dart';
@@ -56,9 +57,20 @@ class Transaction extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: Text(
-              transaction.amount.getString(),
-              style: const TextStyle(fontWeight: FontWeight.w600),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  transaction.amount.getString(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 15,
+                  color: AppColors.gray,
+                ),
+              ],
             ),
           ),
         ],
