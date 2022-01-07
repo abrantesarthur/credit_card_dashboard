@@ -29,7 +29,14 @@ class Transaction extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Icon(
+                  transaction.merchant.type.getIcon(),
+                  color: transaction.merchant.type.getColor(),
+                  size: 20,
+                ),
+                const SizedBox(width: 5),
                 Text(
                   transaction.merchant.name,
                   style: const TextStyle(fontWeight: FontWeight.w600),
