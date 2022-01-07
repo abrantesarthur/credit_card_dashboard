@@ -1,6 +1,7 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:credit_card_dashboard/widgets/layout.dart';
+import 'package:credit_card_dashboard/widgets/transactionHeader.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatelessWidget {
@@ -145,61 +146,8 @@ class Transactions extends StatelessWidget {
             color: Colors.white,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 30,
-                    left: 30,
-                    top: 10,
-                    bottom: 10,
-                  ),
-                  // EXTRACT INTO TransactionHeader widget
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "Date",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.gray,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "Merchant",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.gray,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "Points Earned",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.gray,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          "Amount",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.gray,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(),
+                const TransactionHeader(),
+                Container(height: 1, color: AppColors.background),
               ],
             ),
           ),
