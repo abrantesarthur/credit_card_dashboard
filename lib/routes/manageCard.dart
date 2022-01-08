@@ -11,7 +11,77 @@ class ManageCard extends StatelessWidget {
 
     return Column(
       children: [
-        Container(height: 150, color: Colors.white),
+        Container(
+          height: 200, // TODO: take it out
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.blue,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.green,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: screenHeight / 25),
+        Container(
+          height: 200, // TODO: take it out
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.blue,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.green,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: screenHeight / 25),
+        Container(
+          height: 200, // TODO: take it out
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.blue,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.green,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
