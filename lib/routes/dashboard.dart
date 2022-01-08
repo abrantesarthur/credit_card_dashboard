@@ -79,11 +79,16 @@ class DashboardState extends State<Dashboard> {
                       ),
                       Expanded(
                         flex: rightFlex,
-                        child: currentPage == DashboardPage.transactions
-                            ? const Transactions()
-                            : currentPage == DashboardPage.manageCard
-                                ? const ManageCard()
-                                : Container(),
+                        child: Container(
+                          height: screenHeight / 1.2,
+                          child: SingleChildScrollView(
+                            child: currentPage == DashboardPage.transactions
+                                ? const Transactions()
+                                : currentPage == DashboardPage.manageCard
+                                    ? ManageCard()
+                                    : Container(),
+                          ),
+                        ),
                       ),
                     ],
                   )

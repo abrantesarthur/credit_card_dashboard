@@ -42,7 +42,7 @@ class AppButton extends StatelessWidget {
       onTap: onTapCallBack,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius ?? 100.0),
+          borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
           border: border,
           color: buttonColor ?? AppColors.orange,
           boxShadow: buttonColor != AppColors.gray && hasShadow
@@ -58,51 +58,46 @@ class AppButton extends StatelessWidget {
         ),
         height: height ?? screenHeight / 12,
         width: width,
-        child: Padding(
-          padding:
-              EdgeInsets.only(left: screenWidth / 30, right: screenWidth / 30),
-          child: Stack(
-            children: [
-              iconLeft != null
-                  ? Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: screenWidth / 50),
-                        child: Icon(iconLeft, color: Colors.white, size: 24),
-                      ),
-                    )
-                  : Container(),
-              Center(
-                child: child ??
-                    Text(
-                      textData,
-                      textAlign: TextAlign.center,
-                      style: textStyle ??
-                          const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
+        child: Stack(
+          children: [
+            iconLeft != null
+                ? Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: screenWidth / 50),
+                      child: Icon(iconLeft, color: Colors.white, size: 24),
                     ),
-              ),
-              iconRight != null
-                  ? Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                          padding: EdgeInsets.only(right: screenWidth / 50),
-                          child:
-                              Icon(iconRight, color: Colors.white, size: 24)))
-                  : widgetRight != null
-                      ? Align(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(right: screenWidth / 30),
-                            child: widgetRight,
-                          ),
-                        )
-                      : Container()
-            ],
-          ),
+                  )
+                : Container(),
+            Center(
+              child: child ??
+                  Text(
+                    textData,
+                    textAlign: TextAlign.center,
+                    style: textStyle ??
+                        const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                  ),
+            ),
+            iconRight != null
+                ? Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: screenWidth / 50),
+                        child: Icon(iconRight, color: Colors.white, size: 24)))
+                : widgetRight != null
+                    ? Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: screenWidth / 30),
+                          child: widgetRight,
+                        ),
+                      )
+                    : Container()
+          ],
         ),
       ),
     );
