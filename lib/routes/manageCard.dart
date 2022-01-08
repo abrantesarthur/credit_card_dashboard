@@ -1,4 +1,3 @@
-import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/alertSlider.dart';
@@ -6,6 +5,8 @@ import 'package:credit_card_dashboard/widgets/appButton.dart';
 import 'package:credit_card_dashboard/widgets/appSlider.dart';
 import 'package:flutter/material.dart';
 
+// TODO: add range on top of alerts
+// TODO: move credit limit to the top!
 class ManageCard extends StatefulWidget {
   const ManageCard({Key? key}) : super(key: key);
 
@@ -34,99 +35,30 @@ class ManageCardState extends State<ManageCard> {
             padding: const EdgeInsets.all(30.0),
             child: Row(
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Image.asset(
-                    "images/credit-card.png",
-                    height: 150,
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AppButton(
-                      width: 200,
-                      height: 50,
-                      iconLeft: Icons.lock_open,
-                      textData: "LOCK", // make dynamic
-                      onTapCallBack: () {}, // TODO: substitute lock icon
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Credit Limit",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: screenHeight / 25),
-        Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Credit Limit",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                          ),
-                        ),
-                        SizedBox(height: screenHeight / 30),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: screenWidth / 18,
-                              child: Text(
-                                currentLimit.getString(
-                                  signed: false,
-                                  rounded: true,
-                                ),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth / 30),
-                            AppSlider(
-                              currentLimit: currentLimit,
-                              maxLimit: maxLimit,
-                              onChanged: (val) => setState(() {
-                                currentLimit = val;
-                              }),
-                            ),
-                            SizedBox(width: screenWidth / 20),
-                          ],
-                        ),
-                        SizedBox(height: screenHeight / 50),
-                        // TODO: only show if user uses slider
-                        AppButton(
-                          textData: "Adjust",
-                          textStyle: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                          width: 100,
-                          height: 40,
-                          onTapCallBack: () {},
-                        ),
-                      ],
-                    )),
-                Expanded(
-                  flex: 1,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AppButton(
+                    const SizedBox(height: 20),
+                    Text(
+                      maxLimit.getString(signed: false),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 36,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight / 25),
+                    AppButton(
                       width: 200,
                       height: 50,
-                      textData: "Request Limit Increase",
+                      textData: "Request Increase",
                       textStyle: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -134,7 +66,77 @@ class ManageCardState extends State<ManageCard> {
                       ),
                       onTapCallBack: () {}, // TODO: display popup
                     ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: screenHeight / 25),
+        Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Adjust Current Limit",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight / 30),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: screenWidth / 18,
+                            child: Text(
+                              currentLimit.getString(
+                                signed: false,
+                                rounded: true,
+                              ),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: screenWidth / 30),
+                          AppSlider(
+                            currentLimit: currentLimit,
+                            maxLimit: maxLimit,
+                            onChanged: (val) => setState(() {
+                              currentLimit = val;
+                            }),
+                          ),
+                          SizedBox(width: screenWidth / 20),
+                        ],
+                      ),
+                      SizedBox(height: screenHeight / 25),
+                      AppButton(
+                        width: 200,
+                        height: 50,
+                        textData: "Adjust",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        onTapCallBack: () {}, // TODO: display popup
+                      ),
+                    ],
                   ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(),
                 )
               ],
             ),
@@ -153,7 +155,7 @@ class ManageCardState extends State<ManageCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Alerts",
+                          "Set Alerts",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -195,29 +197,40 @@ class ManageCardState extends State<ManageCard> {
                             toolLimit = val;
                           }),
                         ),
+                        SizedBox(height: screenHeight / 25),
+                        AppButton(
+                          width: 200,
+                          height: 50,
+                          textData: "Set",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onTapCallBack: () {}, // TODO: display popup
+                        ),
                       ],
                     )),
                 Expanded(
                   flex: 1,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AppButton(
-                      width: 200,
-                      height: 50,
-                      textData: "Adjust",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      onTapCallBack: () {}, // TODO: display popup
-                    ),
-                  ),
+                  child: Container(),
                 )
               ],
             ),
           ),
         ),
+        SizedBox(height: screenHeight / 5),
+        Align(
+          alignment: Alignment.center,
+          child: AppButton(
+            width: 250,
+            height: 50,
+            iconLeft: Icons.lock_open,
+            textData: "LOCK CARD", // make dynamic
+            onTapCallBack: () {}, // TODO: substitute lock icon
+          ),
+        ),
+        SizedBox(height: screenHeight / 10),
       ],
     );
   }

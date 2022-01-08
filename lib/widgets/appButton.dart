@@ -28,7 +28,7 @@ class AppButton extends StatelessWidget {
     this.buttonColor,
     this.child,
     this.border,
-    this.hasShadow = true,
+    this.hasShadow = false,
     this.widgetRight,
     required this.onTapCallBack,
   }) : super(key: key);
