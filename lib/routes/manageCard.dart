@@ -38,14 +38,15 @@ class ManageCardState extends State<ManageCard> {
                 Expanded(
                   flex: 1,
                   child: Align(
-                      alignment: Alignment.center,
-                      child: AppButton(
-                        width: 200,
-                        height: 50,
-                        iconLeft: Icons.lock_open,
-                        textData: "LOCK", // make dynamic
-                        onTapCallBack: () {}, // TODO: substitute lock icon
-                      )),
+                    alignment: Alignment.center,
+                    child: AppButton(
+                      width: 200,
+                      height: 50,
+                      iconLeft: Icons.lock_open,
+                      textData: "LOCK", // make dynamic
+                      onTapCallBack: () {}, // TODO: substitute lock icon
+                    ),
+                  ),
                 )
               ],
             ),
@@ -114,8 +115,19 @@ class ManageCardState extends State<ManageCard> {
                     )),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    color: Colors.green,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AppButton(
+                      width: 200,
+                      height: 50,
+                      textData: "Request Limit Increase",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      onTapCallBack: () {}, // TODO: display popup
+                    ),
                   ),
                 )
               ],
