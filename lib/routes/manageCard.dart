@@ -1,4 +1,5 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/appButton.dart';
 import 'package:credit_card_dashboard/widgets/appSlider.dart';
@@ -14,6 +15,7 @@ class ManageCard extends StatefulWidget {
 class ManageCardState extends State<ManageCard> {
   double currentLimit = 7000; // TODO: starts dynamic
   double maxLimit = 12000; // TODO: make dynamic
+  double tripLimit = 1000;
 
   @override
   Widget build(BuildContext context) {
@@ -136,22 +138,86 @@ class ManageCardState extends State<ManageCard> {
         ),
         SizedBox(height: screenHeight / 25),
         Container(
-          height: 200, // TODO: take it out
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Row(
               children: [
                 Expanded(
-                  flex: 2,
-                  child: Container(
-                    color: Colors.blue,
-                  ),
-                ),
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Manage Alerts",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight / 30),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: screenWidth / 18,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.airplanemode_active,
+                                    size: 20,
+                                    color: MerchantType.trip.getColor(),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  const Text(
+                                    "Travel",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: screenWidth / 30),
+                            AppSlider(
+                              currentLimit: tripLimit,
+                              maxLimit: maxLimit,
+                              onChanged: (val) => setState(() {
+                                tripLimit = val;
+                              }),
+                              color: MerchantType.trip.getColor(),
+                            ),
+                            SizedBox(width: screenWidth / 200),
+                            Text(
+                              tripLimit.getString(
+                                signed: false,
+                                rounded: true,
+                              ),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    color: Colors.green,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AppButton(
+                      width: 200,
+                      height: 50,
+                      textData: "Request Limit Increase",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      onTapCallBack: () {}, // TODO: display popup
+                    ),
                   ),
                 )
               ],

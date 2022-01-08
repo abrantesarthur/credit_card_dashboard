@@ -5,12 +5,14 @@ class AppSlider extends StatelessWidget {
   final double currentLimit;
   final double maxLimit;
   final void Function(double) onChanged;
+  final Color? color;
 
   const AppSlider({
     Key? key,
     required this.currentLimit,
     required this.maxLimit,
     required this.onChanged,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -18,8 +20,8 @@ class AppSlider extends StatelessWidget {
     return SliderTheme(
       data: SliderThemeData(
         trackHeight: 30,
-        activeTrackColor: Colors.black,
-        inactiveTrackColor: AppColors.gray,
+        activeTrackColor: color ?? Colors.black,
+        inactiveTrackColor: AppColors.gray.withOpacity(0.4),
         overlayColor: AppColors.orange.withOpacity(0.2),
         trackShape: const RectangularSliderTrackShape(),
         thumbShape: SliderComponentShape.noThumb,
