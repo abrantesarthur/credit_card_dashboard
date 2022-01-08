@@ -3,10 +3,15 @@ import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:flutter/material.dart';
 
 extension CurrencyExtension on double {
-  String getString() {
-    return (this < 0 ? "+" : "-") + // negative means refund
+  String getString({
+    bool signed = true,
+    bool rounded = false,
+  }) {
+    return (signed ? (this < 0 ? "+" : "-") : "") + // negative means refund
         "\$" +
-        ((this * 100).round() / 100).toString();
+        (rounded
+            ? (round().toString())
+            : ((this * 100).round() / 100).toString());
   }
 }
 
