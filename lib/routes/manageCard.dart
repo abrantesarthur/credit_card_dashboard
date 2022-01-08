@@ -71,7 +71,7 @@ class ManageCardState extends State<ManageCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Adjust Credit Limit",
+                          "Credit Limit",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -153,7 +153,7 @@ class ManageCardState extends State<ManageCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Manage Alerts",
+                          "Alerts",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -204,7 +204,7 @@ class ManageCardState extends State<ManageCard> {
                     child: AppButton(
                       width: 200,
                       height: 50,
-                      textData: "Request Limit Increase",
+                      textData: "Adjust",
                       textStyle: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
