@@ -4,12 +4,14 @@ import 'package:credit_card_dashboard/widgets/appSlider.dart';
 import 'package:flutter/material.dart';
 
 class AlertSlider extends StatelessWidget {
+  final MerchantType merchantType;
   final double currentLimit;
   final double maxLimit;
   final void Function(double) onChanged;
 
   const AlertSlider({
     Key? key,
+    required this.merchantType,
     required this.currentLimit,
     required this.maxLimit,
     required this.onChanged,
@@ -23,18 +25,18 @@ class AlertSlider extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: screenWidth / 18,
+          width: screenWidth / 12,
           child: Row(
             children: [
               Icon(
-                Icons.airplanemode_active,
+                merchantType.getIcon(),
                 size: 20,
-                color: MerchantType.trip.getColor(),
+                color: merchantType.getColor(),
               ),
               const SizedBox(width: 10),
-              const Text(
-                "Travel",
-                style: TextStyle(
+              Text(
+                merchantType.getString(),
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
@@ -42,12 +44,12 @@ class AlertSlider extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: screenWidth / 30),
+        SizedBox(width: screenWidth / 100),
         AppSlider(
           currentLimit: currentLimit,
           maxLimit: maxLimit,
           onChanged: onChanged,
-          color: MerchantType.trip.getColor(),
+          color: merchantType.getColor(),
         ),
         SizedBox(width: screenWidth / 200),
         Text(

@@ -6,17 +6,21 @@ class AppSlider extends StatelessWidget {
   final double maxLimit;
   final void Function(double) onChanged;
   final Color? color;
+  final double? width;
 
   const AppSlider({
     Key? key,
     required this.currentLimit,
     required this.maxLimit,
     required this.onChanged,
+    this.width,
     this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return SliderTheme(
       data: SliderThemeData(
         trackHeight: 30,
@@ -26,7 +30,8 @@ class AppSlider extends StatelessWidget {
         trackShape: const RectangularSliderTrackShape(),
         thumbShape: SliderComponentShape.noThumb,
       ),
-      child: Expanded(
+      child: SizedBox(
+        width: width ?? screenWidth / 3,
         child: Slider(
           value: currentLimit,
           divisions: (maxLimit / 100).round(),

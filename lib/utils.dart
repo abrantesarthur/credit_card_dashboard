@@ -70,6 +70,21 @@ extension MTExtension on MerchantType {
     }
   }
 
+  String getString() {
+    switch (this) {
+      case MerchantType.dining:
+        return "Dining";
+      case MerchantType.rideSharing:
+        return "Ridesharing";
+      case MerchantType.tool:
+        return "Tools";
+      case MerchantType.trip:
+        return "Trips";
+      default:
+        return "";
+    }
+  }
+
   IconData getIcon() {
     switch (this) {
       case MerchantType.dining:

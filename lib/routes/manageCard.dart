@@ -1,6 +1,7 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/utils.dart';
+import 'package:credit_card_dashboard/widgets/alertSlider.dart';
 import 'package:credit_card_dashboard/widgets/appButton.dart';
 import 'package:credit_card_dashboard/widgets/appSlider.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,9 @@ class ManageCardState extends State<ManageCard> {
   double currentLimit = 7000; // TODO: starts dynamic
   double maxLimit = 12000; // TODO: make dynamic
   double tripLimit = 1000;
+  double toolLimit = 4000;
+  double diningLimit = 1000;
+  double ridesharingLimit = 1000;
 
   @override
   Widget build(BuildContext context) {
@@ -156,50 +160,40 @@ class ManageCardState extends State<ManageCard> {
                           ),
                         ),
                         SizedBox(height: screenHeight / 30),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: screenWidth / 18,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.airplanemode_active,
-                                    size: 20,
-                                    color: MerchantType.trip.getColor(),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  const Text(
-                                    "Travel",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: screenWidth / 30),
-                            AppSlider(
-                              currentLimit: tripLimit,
-                              maxLimit: maxLimit,
-                              onChanged: (val) => setState(() {
-                                tripLimit = val;
-                              }),
-                              color: MerchantType.trip.getColor(),
-                            ),
-                            SizedBox(width: screenWidth / 200),
-                            Text(
-                              tripLimit.getString(
-                                signed: false,
-                                rounded: true,
-                              ),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
+                        AlertSlider(
+                          merchantType: MerchantType.trip,
+                          currentLimit: tripLimit,
+                          maxLimit: maxLimit,
+                          onChanged: (val) => setState(() {
+                            tripLimit = val;
+                          }),
+                        ),
+                        SizedBox(height: screenHeight / 50),
+                        AlertSlider(
+                          merchantType: MerchantType.dining,
+                          currentLimit: diningLimit,
+                          maxLimit: maxLimit,
+                          onChanged: (val) => setState(() {
+                            diningLimit = val;
+                          }),
+                        ),
+                        SizedBox(height: screenHeight / 50),
+                        AlertSlider(
+                          merchantType: MerchantType.rideSharing,
+                          currentLimit: ridesharingLimit,
+                          maxLimit: maxLimit,
+                          onChanged: (val) => setState(() {
+                            ridesharingLimit = val;
+                          }),
+                        ),
+                        SizedBox(height: screenHeight / 50),
+                        AlertSlider(
+                          merchantType: MerchantType.tool,
+                          currentLimit: toolLimit,
+                          maxLimit: maxLimit,
+                          onChanged: (val) => setState(() {
+                            toolLimit = val;
+                          }),
                         ),
                       ],
                     )),
