@@ -1,3 +1,4 @@
+import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/routes/dashboard.dart';
 import 'package:flutter/material.dart';
 
@@ -20,14 +21,22 @@ class ManageCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    color: Colors.blue,
+                  child: Image.asset(
+                    "images/credit-card.png",
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    color: Colors.green,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 200,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: AppColors.orange,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                 )
               ],
