@@ -100,3 +100,36 @@ extension MTExtension on MerchantCategory {
     }
   }
 }
+
+enum Month { jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec }
+
+extension MonthExtension on Month {
+  String getString() {
+    switch (this) {
+      case Month.jan:
+        return "January";
+      case Month.feb:
+        return "Frebruary";
+      case Month.mar:
+        return "March";
+      case Month.apr:
+        return "April";
+      case Month.may:
+        return "May";
+      case Month.jun:
+        return "June";
+      case Month.jul:
+        return "July";
+      case Month.aug:
+        return "August";
+      case Month.sep:
+        return "September";
+      case Month.oct:
+        return "October";
+      case Month.nov:
+        return "November";
+      case Month.dec:
+        return "December";
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:credit_card_dashboard/utils.dart';
 
 abstract class ChartData {
   String getXValue();
@@ -67,6 +66,7 @@ class DoughnutChart extends StatelessWidget {
           dataLabelMapper: (ChartData data, _) => data.getLabel(),
           enableTooltip: true,
           pointColorMapper: (ChartData data, _) => data.getColor(),
+          animationDuration: 700,
         )
       ],
     );
