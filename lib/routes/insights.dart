@@ -11,7 +11,6 @@ class Insights extends StatefulWidget {
   InsightsState createState() => InsightsState();
 }
 
-// TODO: add buttons to see expenses by date and YTD
 class InsightsState extends State<Insights> {
   late List<ExpenseByMerchantCategory> _expensesByMerchantCategory;
   late List<ExpenseByMonth> _expensesByMonth;
@@ -45,6 +44,7 @@ class InsightsState extends State<Insights> {
                     children: [
                       Expanded(
                         flex: 1,
+                        // TODO: add buttons to select thisMonth and YTD
                         child: DoughnutChart(
                           title: "Expenses by Merchant Category",
                           chartData: _expensesByMerchantCategory,
@@ -81,6 +81,7 @@ class InsightsState extends State<Insights> {
                     children: [
                       Expanded(
                         flex: 2,
+                        // TODO: add buttons to select by days and weeks
                         child: CartesianChart(
                           chartData: getExpensesByMonth(),
                         ),

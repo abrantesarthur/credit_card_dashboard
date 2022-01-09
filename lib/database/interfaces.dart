@@ -1,4 +1,10 @@
-enum MerchantCategory { rideSharing, dining, travel, software, generic }
+enum MerchantCategory {
+  rideSharing,
+  dining,
+  travel,
+  software,
+  generic,
+}
 
 extension MerchantCategoryExtension on MerchantCategory {
   static MerchantCategory fromString(String t) {

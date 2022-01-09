@@ -77,7 +77,7 @@ extension MTExtension on MerchantCategory {
       case MerchantCategory.rideSharing:
         return "Ridesharing";
       case MerchantCategory.software:
-        return "software";
+        return "Software";
       case MerchantCategory.travel:
         return "Travel";
       default:
