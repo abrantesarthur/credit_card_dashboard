@@ -1,9 +1,8 @@
 import 'package:credit_card_dashboard/database/interfaces.dart';
+import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
 import 'package:credit_card_dashboard/widgets/doughnutChart.dart';
-import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_dashboard/utils.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Insights extends StatefulWidget {
   const Insights({Key? key}) : super(key: key);
@@ -82,59 +81,8 @@ class InsightsState extends State<Insights> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: SfCartesianChart(
-                          legend: Legend(
-                            isVisible: true,
-                            overflowMode: LegendItemOverflowMode.wrap,
-                            position: LegendPosition.bottom,
-                            isResponsive: true,
-                            textStyle: const TextStyle(
-                              fontFamily: "Inter",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          tooltipBehavior: TooltipBehavior(
-                            enable: true,
-                            duration: 1,
-                            textStyle: const TextStyle(
-                              fontFamily: "Inter",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          series: <ChartSeries>[
-                            StackedColumnSeries<ExpenseByMonth, String>(
-                              dataSource: _expensesByMonth,
-                              xValueMapper: (data, _) => data.month.getString(),
-                              yValueMapper: (data, _) => data.diningExpenses,
-                              name: MerchantCategory.dining.getString(),
-                              color: MerchantCategory.dining.getColor(),
-                            ),
-                            StackedColumnSeries<ExpenseByMonth, String>(
-                              dataSource: _expensesByMonth,
-                              xValueMapper: (data, _) => data.month.getString(),
-                              yValueMapper: (data, _) =>
-                                  data.rideSharingExpenses,
-                              name: MerchantCategory.rideSharing.getString(),
-                              color: MerchantCategory.rideSharing.getColor(),
-                            ),
-                            StackedColumnSeries<ExpenseByMonth, String>(
-                              dataSource: _expensesByMonth,
-                              xValueMapper: (data, _) => data.month.getString(),
-                              yValueMapper: (data, _) => data.toolExpenses,
-                              name: MerchantCategory.tool.getString(),
-                              color: MerchantCategory.tool.getColor(),
-                            ),
-                            StackedColumnSeries<ExpenseByMonth, String>(
-                              dataSource: _expensesByMonth,
-                              xValueMapper: (data, _) => data.month.getString(),
-                              yValueMapper: (data, _) => data.tripExpenses,
-                              name: MerchantCategory.trip.getString(),
-                              color: MerchantCategory.trip.getColor(),
-                            ),
-                          ],
-                          primaryXAxis: CategoryAxis(),
+                        child: CartesianChart(
+                          chartData: getExpensesByMonth(),
                         ),
                       ),
                       Expanded(flex: 1, child: Container())
@@ -166,7 +114,7 @@ class ExpenseByMonth {
   });
 }
 
-class ExpenseByMerchantCategory implements ChartData {
+class ExpenseByMerchantCategory implements DoughnutChartData {
   final MerchantCategory merchantType;
   final double spending;
 

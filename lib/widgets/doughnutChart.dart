@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-abstract class ChartData {
+abstract class DoughnutChartData {
   String getXValue();
   String getLabel();
   num getYValue();
@@ -9,7 +9,7 @@ abstract class ChartData {
 }
 
 class DoughnutChart extends StatelessWidget {
-  final List<ChartData> chartData;
+  final List<DoughnutChartData> chartData;
   final String title;
 
   const DoughnutChart({
@@ -51,10 +51,10 @@ class DoughnutChart extends StatelessWidget {
         ),
       ),
       series: <CircularSeries>[
-        DoughnutSeries<ChartData, String>(
+        DoughnutSeries<DoughnutChartData, String>(
           dataSource: chartData,
-          xValueMapper: (ChartData data, _) => data.getXValue(),
-          yValueMapper: (ChartData data, _) => data.getYValue(),
+          xValueMapper: (DoughnutChartData data, _) => data.getXValue(),
+          yValueMapper: (DoughnutChartData data, _) => data.getYValue(),
           dataLabelSettings: const DataLabelSettings(
             isVisible: true,
             textStyle: TextStyle(
@@ -63,9 +63,9 @@ class DoughnutChart extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          dataLabelMapper: (ChartData data, _) => data.getLabel(),
+          dataLabelMapper: (DoughnutChartData data, _) => data.getLabel(),
           enableTooltip: true,
-          pointColorMapper: (ChartData data, _) => data.getColor(),
+          pointColorMapper: (DoughnutChartData data, _) => data.getColor(),
           animationDuration: 700,
         )
       ],
