@@ -1,4 +1,5 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/routes/insights.dart';
 import 'package:credit_card_dashboard/routes/manageCard.dart';
 import 'package:credit_card_dashboard/routes/transactions.dart';
 import 'package:credit_card_dashboard/widgets/header.dart';
@@ -35,7 +36,7 @@ class DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    currentPage = DashboardPage.manageCard;
+    currentPage = DashboardPage.insights;
     super.initState();
   }
 
@@ -85,8 +86,8 @@ class DashboardState extends State<Dashboard> {
                             child: currentPage == DashboardPage.transactions
                                 ? const Transactions()
                                 : currentPage == DashboardPage.manageCard
-                                    ? ManageCard()
-                                    : Container(),
+                                    ? const ManageCard()
+                                    : const Insights(),
                           ),
                         ),
                       ),
