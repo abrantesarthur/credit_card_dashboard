@@ -143,6 +143,7 @@ class ManageCardState extends State<ManageCard> {
           ),
         ),
         SizedBox(height: screenHeight / 25),
+        // TODO: activate button only if client modifies alert
         Container(
           color: Colors.white,
           child: Padding(
@@ -155,7 +156,7 @@ class ManageCardState extends State<ManageCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Set Alerts",
+                          "Manage Alerts",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -235,3 +236,6 @@ class ManageCardState extends State<ManageCard> {
     );
   }
 }
+
+
+// TODO: add subscriptions
