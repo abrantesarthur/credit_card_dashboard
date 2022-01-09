@@ -61,8 +61,8 @@ extension MTExtension on MerchantCategory {
         return AppColors.diningColor;
       case MerchantCategory.rideSharing:
         return AppColors.ridesharingColor;
-      case MerchantCategory.tool:
-        return AppColors.toolColor;
+      case MerchantCategory.software:
+        return AppColors.softwareColor;
       case MerchantCategory.travel:
         return AppColors.travelColor;
       default:
@@ -76,8 +76,8 @@ extension MTExtension on MerchantCategory {
         return "Dining";
       case MerchantCategory.rideSharing:
         return "Ridesharing";
-      case MerchantCategory.tool:
-        return "Tools";
+      case MerchantCategory.software:
+        return "software";
       case MerchantCategory.travel:
         return "Travel";
       default:
@@ -91,7 +91,7 @@ extension MTExtension on MerchantCategory {
         return Icons.restaurant_menu;
       case MerchantCategory.rideSharing:
         return Icons.directions_car;
-      case MerchantCategory.tool:
+      case MerchantCategory.software:
         return Icons.settings;
       case MerchantCategory.travel:
         return Icons.airplanemode_active;

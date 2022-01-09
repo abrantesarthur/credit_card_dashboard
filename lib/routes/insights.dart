@@ -101,14 +101,14 @@ class InsightsState extends State<Insights> {
 class ExpenseByMonth {
   final Month month;
   final num travelExpenses;
-  final num toolExpenses;
+  final num softwareExpenses;
   final num rideSharingExpenses;
   final num diningExpenses;
 
   ExpenseByMonth({
     required this.month,
     required this.travelExpenses,
-    required this.toolExpenses,
+    required this.softwareExpenses,
     required this.rideSharingExpenses,
     required this.diningExpenses,
   });
@@ -146,7 +146,7 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory() {
   return [
     ExpenseByMerchantCategory(MerchantCategory.dining, 150),
     ExpenseByMerchantCategory(MerchantCategory.rideSharing, 110),
-    ExpenseByMerchantCategory(MerchantCategory.tool, 150),
+    ExpenseByMerchantCategory(MerchantCategory.software, 150),
     ExpenseByMerchantCategory(MerchantCategory.travel, 80),
   ];
 }
@@ -157,42 +157,42 @@ List<ExpenseByMonth> getExpensesByMonth() {
     ExpenseByMonth(
       month: Month.aug,
       travelExpenses: 17,
-      toolExpenses: 142,
+      softwareExpenses: 142,
       rideSharingExpenses: 87,
       diningExpenses: 100,
     ),
     ExpenseByMonth(
       month: Month.sep,
       travelExpenses: 142,
-      toolExpenses: 130,
+      softwareExpenses: 130,
       rideSharingExpenses: 130,
       diningExpenses: 100,
     ),
     ExpenseByMonth(
       month: Month.oct,
       travelExpenses: 100,
-      toolExpenses: 87,
+      softwareExpenses: 87,
       rideSharingExpenses: 130,
       diningExpenses: 100,
     ),
     ExpenseByMonth(
       month: Month.nov,
       travelExpenses: 100,
-      toolExpenses: 17,
+      softwareExpenses: 17,
       rideSharingExpenses: 100,
       diningExpenses: 130,
     ),
     ExpenseByMonth(
       month: Month.dec,
       travelExpenses: 130,
-      toolExpenses: 100,
+      softwareExpenses: 100,
       rideSharingExpenses: 87,
       diningExpenses: 17,
     ),
     ExpenseByMonth(
       month: Month.jan,
       travelExpenses: 150,
-      toolExpenses: 120,
+      softwareExpenses: 120,
       rideSharingExpenses: 10,
       diningExpenses: 80,
     ),
