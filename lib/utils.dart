@@ -54,16 +54,16 @@ extension TimestampExtension on int {
   }
 }
 
-extension MTExtension on MerchantType {
+extension MTExtension on MerchantCategory {
   Color getColor() {
     switch (this) {
-      case MerchantType.dining:
+      case MerchantCategory.dining:
         return AppColors.diningColor;
-      case MerchantType.rideSharing:
+      case MerchantCategory.rideSharing:
         return AppColors.ridesharingColor;
-      case MerchantType.tool:
+      case MerchantCategory.tool:
         return AppColors.toolColor;
-      case MerchantType.trip:
+      case MerchantCategory.trip:
         return AppColors.tripColor;
       default:
         return Colors.black;
@@ -72,13 +72,13 @@ extension MTExtension on MerchantType {
 
   String getString() {
     switch (this) {
-      case MerchantType.dining:
+      case MerchantCategory.dining:
         return "Dining";
-      case MerchantType.rideSharing:
+      case MerchantCategory.rideSharing:
         return "Ridesharing";
-      case MerchantType.tool:
+      case MerchantCategory.tool:
         return "Tools";
-      case MerchantType.trip:
+      case MerchantCategory.trip:
         return "Trips";
       default:
         return "";
@@ -87,13 +87,13 @@ extension MTExtension on MerchantType {
 
   IconData getIcon() {
     switch (this) {
-      case MerchantType.dining:
+      case MerchantCategory.dining:
         return Icons.restaurant_menu;
-      case MerchantType.rideSharing:
+      case MerchantCategory.rideSharing:
         return Icons.directions_car;
-      case MerchantType.tool:
+      case MerchantCategory.tool:
         return Icons.settings;
-      case MerchantType.trip:
+      case MerchantCategory.trip:
         return Icons.airplanemode_active;
       default:
         return Icons.turned_in;

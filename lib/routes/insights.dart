@@ -11,21 +11,21 @@ class Insights extends StatefulWidget {
 }
 
 class InsightsState extends State<Insights> {
-  late List<ExpensesByMerchantType> _chartData;
+  late List<ExpensesByMerchantCategory> _chartData;
 
-  List<ExpensesByMerchantType> getExpensesByMerchant() {
+  List<ExpensesByMerchantCategory> getExpensesByMerchantCategory() {
     final chartData = [
-      ExpensesByMerchantType(MerchantType.dining, 150),
-      ExpensesByMerchantType(MerchantType.rideSharing, 110),
-      ExpensesByMerchantType(MerchantType.tool, 150),
-      ExpensesByMerchantType(MerchantType.trip, 80),
+      ExpensesByMerchantCategory(MerchantCategory.dining, 150),
+      ExpensesByMerchantCategory(MerchantCategory.rideSharing, 110),
+      ExpensesByMerchantCategory(MerchantCategory.tool, 150),
+      ExpensesByMerchantCategory(MerchantCategory.trip, 80),
     ];
     return chartData;
   }
 
   @override
   void initState() {
-    _chartData = getExpensesByMerchant();
+    _chartData = getExpensesByMerchantCategory();
     super.initState();
   }
 
@@ -55,11 +55,11 @@ class InsightsState extends State<Insights> {
   }
 }
 
-class ExpensesByMerchantType implements ChartData {
-  final MerchantType merchantType;
+class ExpensesByMerchantCategory implements ChartData {
+  final MerchantCategory merchantType;
   final double spending;
 
-  ExpensesByMerchantType(this.merchantType, this.spending);
+  ExpensesByMerchantCategory(this.merchantType, this.spending);
 
   @override
   String getXValue() {

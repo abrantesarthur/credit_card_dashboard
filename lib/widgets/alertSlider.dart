@@ -4,7 +4,7 @@ import 'package:credit_card_dashboard/widgets/appSlider.dart';
 import 'package:flutter/material.dart';
 
 class AlertSlider extends StatelessWidget {
-  final MerchantType merchantType;
+  final MerchantCategory merchantType;
   final double currentLimit;
   final double maxLimit;
   final void Function(double) onChanged;

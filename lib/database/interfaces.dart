@@ -1,31 +1,31 @@
-enum MerchantType { rideSharing, dining, trip, tool, generic }
+enum MerchantCategory { rideSharing, dining, trip, tool, generic }
 
-extension MerchantTypeExtension on MerchantType {
-  static MerchantType fromString(String t) {
+extension MerchantCategoryExtension on MerchantCategory {
+  static MerchantCategory fromString(String t) {
     switch (t) {
       case "ride_sharing":
-        return MerchantType.rideSharing;
+        return MerchantCategory.rideSharing;
       case "dining":
-        return MerchantType.dining;
+        return MerchantCategory.dining;
       case "trip":
-        return MerchantType.trip;
+        return MerchantCategory.trip;
       case "tool":
-        return MerchantType.tool;
+        return MerchantCategory.tool;
       default:
-        return MerchantType.generic;
+        return MerchantCategory.generic;
     }
   }
 }
 
 class Merchant {
-  MerchantType type;
+  MerchantCategory type;
   String name;
 
   Merchant({required this.type, required this.name});
 
   factory Merchant.fromJson(Map json) {
     return Merchant(
-      type: MerchantTypeExtension.fromString(json["type"]),
+      type: MerchantCategoryExtension.fromString(json["type"]),
       name: json["name"],
     );
   }

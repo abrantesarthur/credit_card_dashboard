@@ -163,7 +163,7 @@ class ManageCardState extends State<ManageCard> {
                         ),
                         SizedBox(height: screenHeight / 30),
                         AlertSlider(
-                          merchantType: MerchantType.trip,
+                          merchantType: MerchantCategory.trip,
                           currentLimit: tripLimit,
                           maxLimit: maxLimit,
                           onChanged: (val) => setState(() {
@@ -172,7 +172,7 @@ class ManageCardState extends State<ManageCard> {
                         ),
                         SizedBox(height: screenHeight / 50),
                         AlertSlider(
-                          merchantType: MerchantType.dining,
+                          merchantType: MerchantCategory.dining,
                           currentLimit: diningLimit,
                           maxLimit: maxLimit,
                           onChanged: (val) => setState(() {
@@ -181,7 +181,7 @@ class ManageCardState extends State<ManageCard> {
                         ),
                         SizedBox(height: screenHeight / 50),
                         AlertSlider(
-                          merchantType: MerchantType.rideSharing,
+                          merchantType: MerchantCategory.rideSharing,
                           currentLimit: ridesharingLimit,
                           maxLimit: maxLimit,
                           onChanged: (val) => setState(() {
@@ -190,7 +190,7 @@ class ManageCardState extends State<ManageCard> {
                         ),
                         SizedBox(height: screenHeight / 50),
                         AlertSlider(
-                          merchantType: MerchantType.tool,
+                          merchantType: MerchantCategory.tool,
                           currentLimit: toolLimit,
                           maxLimit: maxLimit,
                           onChanged: (val) => setState(() {

@@ -149,8 +149,10 @@ class Transactions extends StatelessWidget {
               Transaction(
                 transaction: TransactionType(
                     timestamp: 1641527612540,
-                    merchant:
-                        Merchant(type: MerchantType.rideSharing, name: "Uber"),
+                    merchant: Merchant(
+                      type: MerchantCategory.rideSharing,
+                      name: "Uber",
+                    ),
                     pointsEarned: 100,
                     amount: 10.56),
               )
