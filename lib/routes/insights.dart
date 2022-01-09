@@ -30,7 +30,7 @@ class InsightsState extends State<Insights> {
 
     return Column(
       children: [
-        // TODO: add button to select monthly or YTD
+        // TODO: add button to select "Current Month" or YTD
         Container(
           color: Colors.white,
           height: screenHeight / 1.5,
@@ -100,14 +100,14 @@ class InsightsState extends State<Insights> {
 
 class ExpenseByMonth {
   final Month month;
-  final num tripExpenses;
+  final num travelExpenses;
   final num toolExpenses;
   final num rideSharingExpenses;
   final num diningExpenses;
 
   ExpenseByMonth({
     required this.month,
-    required this.tripExpenses,
+    required this.travelExpenses,
     required this.toolExpenses,
     required this.rideSharingExpenses,
     required this.diningExpenses,
@@ -147,7 +147,7 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory() {
     ExpenseByMerchantCategory(MerchantCategory.dining, 150),
     ExpenseByMerchantCategory(MerchantCategory.rideSharing, 110),
     ExpenseByMerchantCategory(MerchantCategory.tool, 150),
-    ExpenseByMerchantCategory(MerchantCategory.trip, 80),
+    ExpenseByMerchantCategory(MerchantCategory.travel, 80),
   ];
 }
 
@@ -156,42 +156,42 @@ List<ExpenseByMonth> getExpensesByMonth() {
   return [
     ExpenseByMonth(
       month: Month.aug,
-      tripExpenses: 17,
+      travelExpenses: 17,
       toolExpenses: 142,
       rideSharingExpenses: 87,
       diningExpenses: 100,
     ),
     ExpenseByMonth(
       month: Month.sep,
-      tripExpenses: 142,
+      travelExpenses: 142,
       toolExpenses: 130,
       rideSharingExpenses: 130,
       diningExpenses: 100,
     ),
     ExpenseByMonth(
       month: Month.oct,
-      tripExpenses: 100,
+      travelExpenses: 100,
       toolExpenses: 87,
       rideSharingExpenses: 130,
       diningExpenses: 100,
     ),
     ExpenseByMonth(
       month: Month.nov,
-      tripExpenses: 100,
+      travelExpenses: 100,
       toolExpenses: 17,
       rideSharingExpenses: 100,
       diningExpenses: 130,
     ),
     ExpenseByMonth(
       month: Month.dec,
-      tripExpenses: 130,
+      travelExpenses: 130,
       toolExpenses: 100,
       rideSharingExpenses: 87,
       diningExpenses: 17,
     ),
     ExpenseByMonth(
       month: Month.jan,
-      tripExpenses: 150,
+      travelExpenses: 150,
       toolExpenses: 120,
       rideSharingExpenses: 10,
       diningExpenses: 80,

@@ -60,9 +60,9 @@ class CartesianChart extends StatelessWidget {
         StackedColumnSeries<ExpenseByMonth, String>(
           dataSource: chartData,
           xValueMapper: (data, _) => data.month.getString(),
-          yValueMapper: (data, _) => data.tripExpenses,
-          name: MerchantCategory.trip.getString(),
-          color: MerchantCategory.trip.getColor(),
+          yValueMapper: (data, _) => data.travelExpenses,
+          name: MerchantCategory.travel.getString(),
+          color: MerchantCategory.travel.getColor(),
         ),
       ],
       primaryXAxis: CategoryAxis(),

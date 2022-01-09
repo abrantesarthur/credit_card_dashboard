@@ -17,7 +17,7 @@ class ManageCard extends StatefulWidget {
 class ManageCardState extends State<ManageCard> {
   double currentLimit = 7000; // TODO: starts dynamic
   double maxLimit = 12000; // TODO: make dynamic
-  double tripLimit = 1000;
+  double travelLimit = 1000;
   double toolLimit = 4000;
   double diningLimit = 1000;
   double ridesharingLimit = 1000;
@@ -163,11 +163,11 @@ class ManageCardState extends State<ManageCard> {
                         ),
                         SizedBox(height: screenHeight / 30),
                         AlertSlider(
-                          merchantType: MerchantCategory.trip,
-                          currentLimit: tripLimit,
+                          merchantType: MerchantCategory.travel,
+                          currentLimit: travelLimit,
                           maxLimit: maxLimit,
                           onChanged: (val) => setState(() {
-                            tripLimit = val;
+                            travelLimit = val;
                           }),
                         ),
                         SizedBox(height: screenHeight / 50),

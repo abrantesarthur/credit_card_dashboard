@@ -1,4 +1,4 @@
-enum MerchantCategory { rideSharing, dining, trip, tool, generic }
+enum MerchantCategory { rideSharing, dining, travel, tool, generic }
 
 extension MerchantCategoryExtension on MerchantCategory {
   static MerchantCategory fromString(String t) {
@@ -7,8 +7,8 @@ extension MerchantCategoryExtension on MerchantCategory {
         return MerchantCategory.rideSharing;
       case "dining":
         return MerchantCategory.dining;
-      case "trip":
-        return MerchantCategory.trip;
+      case "travel":
+        return MerchantCategory.travel;
       case "tool":
         return MerchantCategory.tool;
       default:
