@@ -36,9 +36,13 @@ class InsightsState extends State<Insights> {
     return Column(
       children: [
         Container(
-            color: Colors.white,
-            height: 500,
-            child: DoughnutChart(chartData: _chartData)),
+          color: Colors.white,
+          height: 500,
+          child: DoughnutChart(
+            title: "Expenses by Merchant Category",
+            chartData: _chartData,
+          ),
+        ),
         SizedBox(height: screenHeight / 25),
         Container(
           color: Colors.white,
@@ -65,6 +69,11 @@ class SpendingByMerchantType implements ChartData {
   @override
   double getYValue() {
     return spending;
+  }
+
+  @override
+  String getLabel() {
+    return spending.getString(signed: false, rounded: true);
   }
 
   @override

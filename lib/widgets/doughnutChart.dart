@@ -4,23 +4,26 @@ import 'package:credit_card_dashboard/utils.dart';
 
 abstract class ChartData {
   String getXValue();
+  String getLabel();
   num getYValue();
   Color getColor();
 }
 
 class DoughnutChart extends StatelessWidget {
   final List<ChartData> chartData;
+  final String title;
 
   const DoughnutChart({
     Key? key,
     required this.chartData,
+    required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SfCircularChart(
       title: ChartTitle(
-        text: "Spending by Merchant Category",
+        text: title,
         alignment: ChartAlignment.near,
         textStyle: const TextStyle(
           fontFamily: "Inter",
@@ -31,7 +34,7 @@ class DoughnutChart extends StatelessWidget {
       legend: Legend(
         isVisible: true,
         overflowMode: LegendItemOverflowMode.wrap,
-        position: LegendPosition.bottom,
+        position: LegendPosition.top,
         isResponsive: true,
         textStyle: const TextStyle(
           fontFamily: "Inter",
@@ -54,8 +57,14 @@ class DoughnutChart extends StatelessWidget {
           xValueMapper: (ChartData data, _) => data.getXValue(),
           yValueMapper: (ChartData data, _) => data.getYValue(),
           dataLabelSettings: const DataLabelSettings(
-            isVisible: false,
+            isVisible: true,
+            textStyle: TextStyle(
+              fontFamily: "Inter",
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
           ),
+          dataLabelMapper: (ChartData data, _) => data.getLabel(),
           enableTooltip: true,
           pointColorMapper: (ChartData data, _) => data.getColor(),
         )
