@@ -34,8 +34,8 @@ class Merchant {
 
   factory Merchant.fromJson(Map json) {
     return Merchant(
-      type: MerchantCategoryExtension.fromString(json["type"]),
-      name: json["name"],
+      type: MerchantCategoryExtension.fromString(json["merchant_category"]),
+      name: json["merchant_name"],
     );
   }
 }
@@ -55,10 +55,22 @@ class TransactionType {
 
   factory TransactionType.fromJson(Map json) {
     return TransactionType(
+      merchant: Merchant.fromJson(json),
       timestamp: json["timestamp"],
-      merchant: json["merchant"],
-      pointsEarned: json["points_earned"],
       amount: json["amount"],
+      pointsEarned: json["points_earned"],
     );
+  }
+}
+
+class Transactions {
+  final List<TransactionType> transactions;
+
+  Transactions(this.transactions);
+
+  factory Transactions.fromJson(List<dynamic> json) {
+    List<TransactionType> transactions =
+        json.map((t) => TransactionType.fromJson(t)).toList();
+    return Transactions(transactions);
   }
 }
