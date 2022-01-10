@@ -79,9 +79,9 @@ class InsightsState extends State<Insights> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Expenses by Month",
-                  style: TextStyle(
+                Text(
+                  "Expenses " + selectedPeriod.getString(),
+                  style: const TextStyle(
                     fontFamily: "Inter",
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -184,7 +184,6 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
 }) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
-  // TODO: improve
   return MerchantCategory.values
       .map(
         (merchant) => ExpenseByMerchantCategory(
@@ -199,7 +198,7 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
       .toList();
 }
 
-// // return expenses by category from November to April
+// return expenses by category from November to April
 List<CartesianChartData> getExpensesByMonth({required BuildContext context}) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
