@@ -1,3 +1,5 @@
+import 'package:credit_card_dashboard/widgets/transaction.dart';
+
 enum MerchantCategory {
   rideSharing,
   dining,
@@ -68,13 +70,16 @@ class TransactionList {
 
   TransactionList(this.transactions);
 
-  factory TransactionList.fromJson(List<dynamic> json) {
+  factory TransactionList.fromJson(List<dynamic> json, int? count) {
     // convert transactions
     List<TransactionType> transactions =
         json.map((t) => TransactionType.fromJson(t)).toList();
 
-    // sort transactions
+    // sort transactions by time
     transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-    return TransactionList(transactions);
+
+    return count != null && count < transactions.length
+        ? TransactionList(transactions.sublist(0, count))
+        : TransactionList(transactions);
   }
 }

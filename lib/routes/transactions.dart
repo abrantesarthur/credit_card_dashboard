@@ -10,7 +10,7 @@ class Transactions extends StatelessWidget {
   Transactions({Key? key}) : super(key: key);
 
   // TODO: make dynamic
-  final TransactionList tl = getTransactions();
+  final TransactionList tl = getTransactions(count: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,7 @@ class Transactions extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "June 12 - June 13",
+                        "January 1 - February 1", // TODO: make dynamic
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -160,3 +160,9 @@ class Transactions extends StatelessWidget {
     );
   }
 }
+
+/**
+ * Improvements
+ *    allow clients to sort by date and amount
+ *    open transaction details page
+ */
