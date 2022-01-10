@@ -140,14 +140,33 @@ extension MonthExtension on Month {
   }
 }
 
+extension StringExtension on String {
+  String addCommas() {
+    return replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+        (Match match) => '${match[1]},');
+  }
+}
+
 extension TransactionListExtension on TransactionList {
   String calculatePoints() {
     int points = 0;
     for (var t in transactions) {
       points += t.pointsEarned;
     }
-    return points.toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-        (Match match) => '${match[1]},');
+    return points.toString().addCommas();
+  }
+
+  String calculateBalance() {
+    int thisMonth = DateTime.now().month;
+    int thisYear = DateTime.now().year;
+    int ms = DateTime(thisYear, thisMonth, 1).millisecondsSinceEpoch;
+
+    double balance = 0;
+    for (var t in transactions) {
+      if (t.timestamp >= ms) {
+        balance += t.amount;
+      }
+    }
+    return balance.getString(signed: false).addCommas();
   }
 }

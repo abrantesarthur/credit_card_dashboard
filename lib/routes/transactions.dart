@@ -44,9 +44,9 @@ class Transactions extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            "\$4,000,000",
-                            style: TextStyle(
+                          Text(
+                            creditCard.transactions.calculateBalance(),
+                            style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 20,
                             ),
