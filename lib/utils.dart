@@ -65,6 +65,8 @@ extension MTExtension on MerchantCategory {
         return AppColors.softwareColor;
       case MerchantCategory.travel:
         return AppColors.travelColor;
+      case MerchantCategory.news:
+        return AppColors.newsColor;
       default:
         return Colors.black;
     }
@@ -80,6 +82,8 @@ extension MTExtension on MerchantCategory {
         return "Software";
       case MerchantCategory.travel:
         return "Travel";
+      case MerchantCategory.news:
+        return "News";
       default:
         return "";
     }
@@ -95,6 +99,8 @@ extension MTExtension on MerchantCategory {
         return Icons.settings;
       case MerchantCategory.travel:
         return Icons.airplanemode_active;
+      case MerchantCategory.news:
+        return Icons.chrome_reader_mode;
       default:
         return Icons.turned_in;
     }

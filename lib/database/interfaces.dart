@@ -3,6 +3,7 @@ enum MerchantCategory {
   dining,
   travel,
   software,
+  news,
   generic,
 }
 
@@ -17,6 +18,8 @@ extension MerchantCategoryExtension on MerchantCategory {
         return MerchantCategory.travel;
       case "software":
         return MerchantCategory.software;
+      case "news":
+        return MerchantCategory.news;
       default:
         return MerchantCategory.generic;
     }
