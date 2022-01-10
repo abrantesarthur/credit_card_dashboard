@@ -1,11 +1,28 @@
 import 'package:credit_card_dashboard/database/interfaces.dart';
-import 'package:credit_card_dashboard/routes/insights.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:credit_card_dashboard/utils.dart';
 
+class CartesianChartData {
+  final String label;
+  final num diningExpenses;
+  final num ridesharingExpenses;
+  final num travelExpenses;
+  final num newsExpenses;
+  final num softwareExpenses;
+
+  CartesianChartData({
+    required this.label,
+    required this.diningExpenses,
+    required this.ridesharingExpenses,
+    required this.travelExpenses,
+    required this.newsExpenses,
+    required this.softwareExpenses,
+  });
+}
+
 class CartesianChart extends StatelessWidget {
-  final List<ExpenseByMonth> chartData;
+  final List<CartesianChartData> chartData;
 
   const CartesianChart({
     Key? key,
@@ -36,33 +53,40 @@ class CartesianChart extends StatelessWidget {
         ),
       ),
       series: <ChartSeries>[
-        StackedColumnSeries<ExpenseByMonth, String>(
+        StackedColumnSeries<CartesianChartData, String>(
           dataSource: chartData,
-          xValueMapper: (data, _) => data.month.getString(),
+          xValueMapper: (data, _) => data.label,
           yValueMapper: (data, _) => data.diningExpenses,
           name: MerchantCategory.dining.getString(),
           color: MerchantCategory.dining.getColor(),
         ),
-        StackedColumnSeries<ExpenseByMonth, String>(
+        StackedColumnSeries<CartesianChartData, String>(
           dataSource: chartData,
-          xValueMapper: (data, _) => data.month.getString(),
-          yValueMapper: (data, _) => data.rideSharingExpenses,
+          xValueMapper: (data, _) => data.label,
+          yValueMapper: (data, _) => data.ridesharingExpenses,
           name: MerchantCategory.rideSharing.getString(),
           color: MerchantCategory.rideSharing.getColor(),
         ),
-        StackedColumnSeries<ExpenseByMonth, String>(
+        StackedColumnSeries<CartesianChartData, String>(
           dataSource: chartData,
-          xValueMapper: (data, _) => data.month.getString(),
+          xValueMapper: (data, _) => data.label,
           yValueMapper: (data, _) => data.softwareExpenses,
           name: MerchantCategory.software.getString(),
           color: MerchantCategory.software.getColor(),
         ),
-        StackedColumnSeries<ExpenseByMonth, String>(
+        StackedColumnSeries<CartesianChartData, String>(
           dataSource: chartData,
-          xValueMapper: (data, _) => data.month.getString(),
+          xValueMapper: (data, _) => data.label,
           yValueMapper: (data, _) => data.travelExpenses,
           name: MerchantCategory.travel.getString(),
           color: MerchantCategory.travel.getColor(),
+        ),
+        StackedColumnSeries<CartesianChartData, String>(
+          dataSource: chartData,
+          xValueMapper: (data, _) => data.label,
+          yValueMapper: (data, _) => data.newsExpenses,
+          name: MerchantCategory.news.getString(),
+          color: MerchantCategory.news.getColor(),
         ),
       ],
       primaryXAxis: CategoryAxis(),

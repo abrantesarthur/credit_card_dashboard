@@ -110,6 +110,64 @@ extension MTExtension on MerchantCategory {
 enum Month { jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec }
 
 extension MonthExtension on Month {
+  int getStartTimestamp() {
+    switch (this) {
+      case Month.jan:
+        return DateTime(2022, 1, 1).millisecondsSinceEpoch;
+      case Month.feb:
+        return DateTime(2022, 2, 1).millisecondsSinceEpoch;
+      case Month.mar:
+        return DateTime(2022, 3, 1).millisecondsSinceEpoch;
+      case Month.apr:
+        return DateTime(2022, 4, 1).millisecondsSinceEpoch;
+      case Month.may:
+        return DateTime(2021, 5, 1).millisecondsSinceEpoch;
+      case Month.jun:
+        return DateTime(2021, 6, 1).millisecondsSinceEpoch;
+      case Month.jul:
+        return DateTime(2021, 7, 1).millisecondsSinceEpoch;
+      case Month.aug:
+        return DateTime(2021, 8, 1).millisecondsSinceEpoch;
+      case Month.sep:
+        return DateTime(2021, 9, 1).millisecondsSinceEpoch;
+      case Month.oct:
+        return DateTime(2021, 10, 1).millisecondsSinceEpoch;
+      case Month.nov:
+        return DateTime(2021, 11, 1).millisecondsSinceEpoch;
+      case Month.dec:
+        return DateTime(2021, 12, 1).millisecondsSinceEpoch;
+    }
+  }
+
+  int getEndTimestamp() {
+    switch (this) {
+      case Month.jan:
+        return DateTime(2022, 1, 31).millisecondsSinceEpoch;
+      case Month.feb:
+        return DateTime(2022, 2, 28).millisecondsSinceEpoch;
+      case Month.mar:
+        return DateTime(2022, 3, 31).millisecondsSinceEpoch;
+      case Month.apr:
+        return DateTime(2022, 4, 30).millisecondsSinceEpoch;
+      case Month.may:
+        return DateTime(2021, 5, 31).millisecondsSinceEpoch;
+      case Month.jun:
+        return DateTime(2021, 6, 30).millisecondsSinceEpoch;
+      case Month.jul:
+        return DateTime(2021, 7, 31).millisecondsSinceEpoch;
+      case Month.aug:
+        return DateTime(2021, 8, 31).millisecondsSinceEpoch;
+      case Month.sep:
+        return DateTime(2021, 9, 30).millisecondsSinceEpoch;
+      case Month.oct:
+        return DateTime(2021, 10, 31).millisecondsSinceEpoch;
+      case Month.nov:
+        return DateTime(2021, 11, 30).millisecondsSinceEpoch;
+      case Month.dec:
+        return DateTime(2021, 12, 31).millisecondsSinceEpoch;
+    }
+  }
+
   String getString() {
     switch (this) {
       case Month.jan:
@@ -178,5 +236,22 @@ extension TransactionListExtension on TransactionList {
       }
     }
     return balance;
+  }
+}
+
+enum Period { thisMonth, ytd }
+
+extension PeriodExtension on Period {
+  // consider today is April 30th, 2022
+  int getStartTimestamp() {
+    if (this == Period.thisMonth) {
+      return DateTime(2022, 4, 1).millisecondsSinceEpoch;
+    } else {
+      return DateTime(2022, 1, 1).millisecondsSinceEpoch;
+    }
+  }
+
+  int getEndTimestamp() {
+    return DateTime(2022, 4, 30).millisecondsSinceEpoch;
   }
 }

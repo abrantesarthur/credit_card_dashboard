@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/models/creditCard.dart';
 import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
@@ -15,7 +17,7 @@ class Insights extends StatefulWidget {
 
 class InsightsState extends State<Insights> {
   late List<ExpenseByMerchantCategory> _expensesByMerchantCategory = [];
-  late List<ExpenseByMonth> _expensesByMonth = [];
+  late List<CartesianChartData> _cartesianChartData = [];
 
   @override
   void initState() {
@@ -26,7 +28,7 @@ class InsightsState extends State<Insights> {
         _expensesByMerchantCategory = getExpensesByMerchantCategory(
           context: context,
         );
-        _expensesByMonth = getExpensesByMonth(context);
+        _cartesianChartData = getExpensesByMonth(context: context);
       });
     });
 
@@ -93,7 +95,7 @@ class InsightsState extends State<Insights> {
                         flex: 2,
                         // TODO: add buttons to select by days and weeks
                         child: CartesianChart(
-                          chartData: _expensesByMonth,
+                          chartData: _cartesianChartData,
                         ),
                       ),
                       Expanded(flex: 1, child: Container())
@@ -107,22 +109,6 @@ class InsightsState extends State<Insights> {
       ],
     );
   }
-}
-
-class ExpenseByMonth {
-  final Month month;
-  final num travelExpenses;
-  final num softwareExpenses;
-  final num rideSharingExpenses;
-  final num diningExpenses;
-
-  ExpenseByMonth({
-    required this.month,
-    required this.travelExpenses,
-    required this.softwareExpenses,
-    required this.rideSharingExpenses,
-    required this.diningExpenses,
-  });
 }
 
 class ExpenseByMerchantCategory implements DoughnutChartData {
@@ -155,85 +141,93 @@ class ExpenseByMerchantCategory implements DoughnutChartData {
 // TODO: this month, ytd,
 List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
   required BuildContext context,
-  Range range = Range.thisMonth,
+  Period period = Period.thisMonth,
 }) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
+
   return [
     ExpenseByMerchantCategory(
       MerchantCategory.dining,
       ccm.getExpenseByMerchant(
         merchantCategory: MerchantCategory.dining,
-        range: range,
+        startTs: period.getStartTimestamp(),
+        endTs: period.getEndTimestamp(),
       ),
     ),
     ExpenseByMerchantCategory(
       MerchantCategory.rideSharing,
       ccm.getExpenseByMerchant(
         merchantCategory: MerchantCategory.rideSharing,
-        range: range,
+        startTs: period.getStartTimestamp(),
+        endTs: period.getEndTimestamp(),
       ),
     ),
     ExpenseByMerchantCategory(
       MerchantCategory.software,
       ccm.getExpenseByMerchant(
         merchantCategory: MerchantCategory.software,
-        range: range,
+        startTs: period.getStartTimestamp(),
+        endTs: period.getEndTimestamp(),
       ),
     ),
     ExpenseByMerchantCategory(
       MerchantCategory.travel,
       ccm.getExpenseByMerchant(
         merchantCategory: MerchantCategory.travel,
-        range: range,
+        startTs: period.getStartTimestamp(),
+        endTs: period.getEndTimestamp(),
+      ),
+    ),
+    ExpenseByMerchantCategory(
+      MerchantCategory.news,
+      ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.news,
+        startTs: period.getStartTimestamp(),
+        endTs: period.getEndTimestamp(),
       ),
     ),
   ];
 }
 
-// TODO: make dynamic
-List<ExpenseByMonth> getExpensesByMonth(BuildContext context) {
-  return [
-    ExpenseByMonth(
-      month: Month.aug,
-      travelExpenses: 17,
-      softwareExpenses: 142,
-      rideSharingExpenses: 87,
-      diningExpenses: 100,
-    ),
-    ExpenseByMonth(
-      month: Month.sep,
-      travelExpenses: 142,
-      softwareExpenses: 130,
-      rideSharingExpenses: 130,
-      diningExpenses: 100,
-    ),
-    ExpenseByMonth(
-      month: Month.oct,
-      travelExpenses: 100,
-      softwareExpenses: 87,
-      rideSharingExpenses: 130,
-      diningExpenses: 100,
-    ),
-    ExpenseByMonth(
-      month: Month.nov,
-      travelExpenses: 100,
-      softwareExpenses: 17,
-      rideSharingExpenses: 100,
-      diningExpenses: 130,
-    ),
-    ExpenseByMonth(
-      month: Month.dec,
-      travelExpenses: 130,
-      softwareExpenses: 100,
-      rideSharingExpenses: 87,
-      diningExpenses: 17,
-    ),
-    ExpenseByMonth(
-      month: Month.jan,
-      travelExpenses: 150,
-      softwareExpenses: 120,
-      rideSharingExpenses: 10,
-      diningExpenses: 80,
-    ),
-  ];
+// // return expenses by category from November to April
+List<CartesianChartData> getExpensesByMonth({required BuildContext context}) {
+  CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
+
+  return Month.values
+      .where((month) => (month == Month.nov ||
+          month == Month.dec ||
+          month == Month.jan ||
+          month == Month.feb ||
+          month == Month.mar ||
+          month == Month.apr))
+      .map((m) {
+    return CartesianChartData(
+      label: m.getString(),
+      travelExpenses: ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.travel,
+        startTs: m.getStartTimestamp(),
+        endTs: m.getEndTimestamp(),
+      ),
+      softwareExpenses: ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.software,
+        startTs: m.getStartTimestamp(),
+        endTs: m.getEndTimestamp(),
+      ),
+      ridesharingExpenses: ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.rideSharing,
+        startTs: m.getStartTimestamp(),
+        endTs: m.getEndTimestamp(),
+      ),
+      diningExpenses: ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.dining,
+        startTs: m.getStartTimestamp(),
+        endTs: m.getEndTimestamp(),
+      ),
+      newsExpenses: ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.news,
+        startTs: m.getStartTimestamp(),
+        endTs: m.getEndTimestamp(),
+      ),
+    );
+  }).toList();
 }
