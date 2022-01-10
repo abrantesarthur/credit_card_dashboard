@@ -29,14 +29,14 @@ extension MerchantCategoryExtension on MerchantCategory {
 }
 
 class Merchant {
-  MerchantCategory type;
+  MerchantCategory category;
   String name;
 
-  Merchant({required this.type, required this.name});
+  Merchant({required this.category, required this.name});
 
   factory Merchant.fromJson(Map json) {
     return Merchant(
-      type: MerchantCategoryExtension.fromString(json["merchant_category"]),
+      category: MerchantCategoryExtension.fromString(json["merchant_category"]),
       name: json["merchant_name"],
     );
   }

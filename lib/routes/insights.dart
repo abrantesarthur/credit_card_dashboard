@@ -1,8 +1,10 @@
 import 'package:credit_card_dashboard/database/interfaces.dart';
+import 'package:credit_card_dashboard/models/creditCard.dart';
 import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
 import 'package:credit_card_dashboard/widgets/doughnutChart.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_dashboard/utils.dart';
+import 'package:provider/provider.dart';
 
 class Insights extends StatefulWidget {
   const Insights({Key? key}) : super(key: key);
@@ -12,14 +14,20 @@ class Insights extends StatefulWidget {
 }
 
 class InsightsState extends State<Insights> {
-  late List<ExpenseByMerchantCategory> _expensesByMerchantCategory;
-  late List<ExpenseByMonth> _expensesByMonth;
+  late List<ExpenseByMerchantCategory> _expensesByMerchantCategory = [];
+  late List<ExpenseByMonth> _expensesByMonth = [];
 
   @override
   void initState() {
     // TODO: make dynamic
-    _expensesByMerchantCategory = getExpensesByMerchantCategory();
-    _expensesByMonth = getExpensesByMonth();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        _expensesByMerchantCategory = getExpensesByMerchantCategory(context);
+        _expensesByMonth = getExpensesByMonth(context);
+      });
+    });
+
     super.initState();
   }
 
@@ -83,7 +91,7 @@ class InsightsState extends State<Insights> {
                         flex: 2,
                         // TODO: add buttons to select by days and weeks
                         child: CartesianChart(
-                          chartData: getExpensesByMonth(),
+                          chartData: _expensesByMonth,
                         ),
                       ),
                       Expanded(flex: 1, child: Container())
@@ -142,18 +150,33 @@ class ExpenseByMerchantCategory implements DoughnutChartData {
   }
 }
 
-// TODO: make dynamic
-List<ExpenseByMerchantCategory> getExpensesByMerchantCategory() {
+// TODO: this month, ytd,
+List<ExpenseByMerchantCategory> getExpensesByMerchantCategory(
+  BuildContext context,
+) {
+  CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
   return [
-    ExpenseByMerchantCategory(MerchantCategory.dining, 150),
-    ExpenseByMerchantCategory(MerchantCategory.rideSharing, 110),
-    ExpenseByMerchantCategory(MerchantCategory.software, 150),
-    ExpenseByMerchantCategory(MerchantCategory.travel, 80),
+    ExpenseByMerchantCategory(
+      MerchantCategory.dining,
+      ccm.getExpenseByMerchant(MerchantCategory.dining),
+    ),
+    ExpenseByMerchantCategory(
+      MerchantCategory.rideSharing,
+      ccm.getExpenseByMerchant(MerchantCategory.rideSharing),
+    ),
+    ExpenseByMerchantCategory(
+      MerchantCategory.software,
+      ccm.getExpenseByMerchant(MerchantCategory.software),
+    ),
+    ExpenseByMerchantCategory(
+      MerchantCategory.travel,
+      ccm.getExpenseByMerchant(MerchantCategory.travel),
+    ),
   ];
 }
 
 // TODO: make dynamic
-List<ExpenseByMonth> getExpensesByMonth() {
+List<ExpenseByMonth> getExpensesByMonth(BuildContext context) {
   return [
     ExpenseByMonth(
       month: Month.aug,

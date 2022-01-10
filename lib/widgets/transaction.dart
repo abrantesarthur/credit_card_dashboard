@@ -33,8 +33,8 @@ class Transaction extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  transaction.merchant.type.getIcon(),
-                  color: transaction.merchant.type.getColor(),
+                  transaction.merchant.category.getIcon(),
+                  color: transaction.merchant.category.getColor(),
                   size: 20,
                 ),
                 const SizedBox(width: 5),
@@ -51,7 +51,7 @@ class Transaction extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Points(
                 points: transaction.pointsEarned,
-                backgroundColor: transaction.merchant.type.getColor(),
+                backgroundColor: transaction.merchant.category.getColor(),
               ),
             ),
           ),

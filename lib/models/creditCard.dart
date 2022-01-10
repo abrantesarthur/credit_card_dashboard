@@ -74,4 +74,14 @@ class CreditCardModel extends ChangeNotifier {
     CreditCard cc = getCreditCard();
     fromCreditCardInterface(cc);
   }
+
+  double getExpenseByMerchant(MerchantCategory merchantCategory) {
+    double expenses = 0;
+    for (var t in transactions) {
+      if (t.merchant.category == merchantCategory) {
+        expenses += t.amount;
+      }
+    }
+    return expenses;
+  }
 }
