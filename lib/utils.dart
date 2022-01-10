@@ -139,3 +139,15 @@ extension MonthExtension on Month {
     }
   }
 }
+
+extension TransactionListExtension on TransactionList {
+  String calculatePoints() {
+    int points = 0;
+    for (var t in transactions) {
+      points += t.pointsEarned;
+    }
+    return points.toString().replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+        (Match match) => '${match[1]},');
+  }
+}

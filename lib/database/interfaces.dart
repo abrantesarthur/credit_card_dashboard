@@ -70,7 +70,7 @@ class TransactionList {
 
   TransactionList(this.transactions);
 
-  factory TransactionList.fromJson(List<dynamic> json, int? count) {
+  factory TransactionList.fromJson(List<dynamic> json) {
     // convert transactions
     List<TransactionType> transactions =
         json.map((t) => TransactionType.fromJson(t)).toList();
@@ -78,8 +78,20 @@ class TransactionList {
     // sort transactions by time
     transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
-    return count != null && count < transactions.length
-        ? TransactionList(transactions.sublist(0, count))
-        : TransactionList(transactions);
+    return TransactionList(transactions);
+  }
+}
+
+class CreditCard {
+  final TransactionList transactions;
+  final int creditLimit;
+
+  CreditCard({required this.transactions, required this.creditLimit});
+
+  factory CreditCard.fromJson(Map<String, dynamic> json) {
+    return CreditCard(
+      transactions: TransactionList.fromJson(json["transactions"]),
+      creditLimit: json["credit_limit"],
+    );
   }
 }

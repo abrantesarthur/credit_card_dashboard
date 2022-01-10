@@ -5,12 +5,13 @@ import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:credit_card_dashboard/widgets/transaction.dart';
 import 'package:credit_card_dashboard/widgets/transactionHeader.dart';
 import 'package:flutter/material.dart';
+import 'package:credit_card_dashboard/utils.dart';
 
 class Transactions extends StatelessWidget {
   Transactions({Key? key}) : super(key: key);
 
   // TODO: make dynamic
-  final TransactionList tl = getTransactions(count: 20);
+  final CreditCard creditCard = getCreditCard();
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +110,9 @@ class Transactions extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const Text(
-                        "43,000",
-                        style: TextStyle(
+                      Text(
+                        creditCard.transactions.calculatePoints().toString(),
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
                         ),
@@ -150,9 +151,9 @@ class Transactions extends StatelessWidget {
             children: [
               const TransactionHeader(),
               Container(height: 1, color: AppColors.background),
-              ...tl.transactions.map(
-                (t) => Transaction(transaction: t),
-              )
+              ...creditCard.transactions.transactions.sublist(0, 20).map(
+                    (t) => Transaction(transaction: t),
+                  )
             ],
           ),
         ),
