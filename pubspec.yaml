@@ -17,6 +17,8 @@ dependencies:
   flutter_web_plugins:
       sdk: flutter
   syncfusion_flutter_charts: ^19.4.41
+  provider: ^4.3.3
+
 
 dev_dependencies:
   flutter_test:
