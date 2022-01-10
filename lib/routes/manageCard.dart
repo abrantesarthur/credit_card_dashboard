@@ -1,4 +1,5 @@
 import 'package:credit_card_dashboard/database/interfaces.dart';
+import 'package:credit_card_dashboard/database/methods.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/alertSlider.dart';
 import 'package:credit_card_dashboard/widgets/appButton.dart';
@@ -6,7 +7,6 @@ import 'package:credit_card_dashboard/widgets/appSlider.dart';
 import 'package:flutter/material.dart';
 
 // TODO: add range on top of alerts
-// TODO: move credit limit to the top!
 class ManageCard extends StatefulWidget {
   const ManageCard({Key? key}) : super(key: key);
 
@@ -15,6 +15,9 @@ class ManageCard extends StatefulWidget {
 }
 
 class ManageCardState extends State<ManageCard> {
+  // TODO: make dynamic
+  final CreditCard creditCard = getCreditCard();
+
   double currentLimit = 7000; // TODO: starts dynamic
   double maxLimit = 12000; // TODO: make dynamic
   double travelLimit = 1000;
