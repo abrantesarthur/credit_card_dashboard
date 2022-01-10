@@ -84,13 +84,13 @@ class TransactionList {
 
 class CreditCard {
   final TransactionList transactions;
-  final int creditLimit;
-  final int maxLimit;
-  final int travelLimit;
-  final int softwareLimit;
-  final int diningLimit;
-  final int ridesharingLimit;
-  final int newsLimit;
+  double creditLimit;
+  final double maxLimit;
+  double travelLimit;
+  double softwareLimit;
+  double diningLimit;
+  double ridesharingLimit;
+  double newsLimit;
 
   CreditCard({
     required this.transactions,

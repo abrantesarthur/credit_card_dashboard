@@ -36,7 +36,7 @@ class DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    currentPage = DashboardPage.insights;
+    currentPage = DashboardPage.manageCard;
     super.initState();
   }
 
