@@ -75,10 +75,20 @@ class CreditCardModel extends ChangeNotifier {
     fromCreditCardInterface(cc);
   }
 
-  double getExpenseByMerchant(MerchantCategory merchantCategory) {
+  double getExpenseByMerchant({
+    required MerchantCategory merchantCategory,
+    int month = 4,
+    int year = 2022,
+  }) {
+    // calculate tiemstamp range
+    int startTs = DateTime(year, month, 1).millisecondsSinceEpoch;
+    int endTs = DateTime(year, month, 30).millisecondsSinceEpoch;
+
     double expenses = 0;
     for (var t in transactions) {
-      if (t.merchant.category == merchantCategory) {
+      if (t.merchant.category == merchantCategory &&
+          t.timestamp > startTs &&
+          t.timestamp <= endTs) {
         expenses += t.amount;
       }
     }

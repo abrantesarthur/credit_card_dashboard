@@ -94,7 +94,7 @@ class Transactions extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "January 1 - February 1", // TODO: make dynamic
+                        "April 1 - May 1",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
