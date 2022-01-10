@@ -45,16 +45,23 @@ class Transactions extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            creditCard.transactions.calculateBalance(),
+                            creditCard.transactions
+                                .calculateBalance()
+                                .getString(signed: false)
+                                .addCommas(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 20,
                             ),
                           ),
                           SizedBox(width: screenWidth / 100),
-                          const Text(
-                            "Available \$123,456",
-                            style: TextStyle(
+                          Text(
+                            "Available " +
+                                creditCard
+                                    .getAvailableBalance()
+                                    .getString(signed: false)
+                                    .addCommas(),
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 10,
                             ),
@@ -62,7 +69,10 @@ class Transactions extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      const HorizontalBar(fill: 0.5, width: 300),
+                      HorizontalBar(
+                        fill: creditCard.calculateBalancePercentage(),
+                        width: 300,
+                      ),
                     ],
                   ),
                 ),

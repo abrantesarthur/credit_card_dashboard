@@ -147,6 +147,17 @@ extension StringExtension on String {
   }
 }
 
+extension CreditCardExtension on CreditCard {
+  double calculateBalancePercentage() {
+    double balance = transactions.calculateBalance();
+    return balance / creditLimit;
+  }
+
+  double getAvailableBalance() {
+    return creditLimit - transactions.calculateBalance();
+  }
+}
+
 extension TransactionListExtension on TransactionList {
   String calculatePoints() {
     int points = 0;
@@ -156,7 +167,7 @@ extension TransactionListExtension on TransactionList {
     return points.toString().addCommas();
   }
 
-  String calculateBalance() {
+  double calculateBalance() {
     int thisMonth = DateTime.now().month;
     int thisYear = DateTime.now().year;
     int ms = DateTime(thisYear, thisMonth, 1).millisecondsSinceEpoch;
@@ -167,6 +178,6 @@ extension TransactionListExtension on TransactionList {
         balance += t.amount;
       }
     }
-    return balance.getString(signed: false).addCommas();
+    return balance;
   }
 }
