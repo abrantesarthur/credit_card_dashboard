@@ -23,7 +23,9 @@ class InsightsState extends State<Insights> {
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       setState(() {
-        _expensesByMerchantCategory = getExpensesByMerchantCategory(context);
+        _expensesByMerchantCategory = getExpensesByMerchantCategory(
+          context: context,
+        );
         _expensesByMonth = getExpensesByMonth(context);
       });
     });
@@ -151,26 +153,39 @@ class ExpenseByMerchantCategory implements DoughnutChartData {
 }
 
 // TODO: this month, ytd,
-List<ExpenseByMerchantCategory> getExpensesByMerchantCategory(
-  BuildContext context,
-) {
+List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
+  required BuildContext context,
+  Range range = Range.thisMonth,
+}) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
   return [
     ExpenseByMerchantCategory(
       MerchantCategory.dining,
-      ccm.getExpenseByMerchant(MerchantCategory.dining),
+      ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.dining,
+        range: range,
+      ),
     ),
     ExpenseByMerchantCategory(
       MerchantCategory.rideSharing,
-      ccm.getExpenseByMerchant(MerchantCategory.rideSharing),
+      ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.rideSharing,
+        range: range,
+      ),
     ),
     ExpenseByMerchantCategory(
       MerchantCategory.software,
-      ccm.getExpenseByMerchant(MerchantCategory.software),
+      ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.software,
+        range: range,
+      ),
     ),
     ExpenseByMerchantCategory(
       MerchantCategory.travel,
-      ccm.getExpenseByMerchant(MerchantCategory.travel),
+      ccm.getExpenseByMerchant(
+        merchantCategory: MerchantCategory.travel,
+        range: range,
+      ),
     ),
   ];
 }

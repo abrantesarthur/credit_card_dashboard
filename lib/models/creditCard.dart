@@ -77,12 +77,18 @@ class CreditCardModel extends ChangeNotifier {
 
   double getExpenseByMerchant({
     required MerchantCategory merchantCategory,
-    int month = 4,
-    int year = 2022,
+    required Range range,
   }) {
-    // calculate tiemstamp range
-    int startTs = DateTime(year, month, 1).millisecondsSinceEpoch;
-    int endTs = DateTime(year, month, 30).millisecondsSinceEpoch;
+    // calculate tiemstamp range considering today is 04/30/2022
+    int startTs = DateTime(2022, 4, 1).millisecondsSinceEpoch;
+    int endTs;
+    if (range == Range.thisMonth) {
+      // this month range
+      endTs = DateTime(2022, 4, 30).millisecondsSinceEpoch;
+    } else {
+      // YTD range
+      endTs = DateTime(2022, 4, 30).millisecondsSinceEpoch;
+    }
 
     double expenses = 0;
     for (var t in transactions) {
@@ -95,3 +101,5 @@ class CreditCardModel extends ChangeNotifier {
     return expenses;
   }
 }
+
+enum Range { thisMonth, yearToDate }
