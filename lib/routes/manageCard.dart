@@ -16,13 +16,10 @@ class ManageCard extends StatefulWidget {
 }
 
 class ManageCardState extends State<ManageCard> {
-  final CreditCard creditCard = getCreditCard();
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Column(
       children: [
         Container(
@@ -111,12 +108,14 @@ class ManageCardState extends State<ManageCard> {
                             ),
                           ),
                           SizedBox(width: screenWidth / 30),
-                          AppSlider(
-                            currentLimit: creditCard.creditLimit,
-                            maxLimit: creditCard.maxLimit,
-                            onChanged: (val) => setState(() {
-                              creditCard.creditLimit = val;
-                            }),
+                          Consumer<CreditCardModel>(
+                            builder: (context, ccm, _) => AppSlider(
+                              currentLimit: ccm.creditLimit,
+                              maxLimit: ccm.maxLimit,
+                              onChanged: (val) => setState(() {
+                                ccm.creditLimit = val;
+                              }),
+                            ),
                           ),
                           SizedBox(width: screenWidth / 20),
                         ],
