@@ -1,7 +1,9 @@
 import 'dart:html';
 
+import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/models/creditCard.dart';
+import 'package:credit_card_dashboard/widgets/appButton.dart';
 import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
 import 'package:credit_card_dashboard/widgets/doughnutChart.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +20,10 @@ class Insights extends StatefulWidget {
 class InsightsState extends State<Insights> {
   late List<ExpenseByMerchantCategory> _expensesByMerchantCategory = [];
   late List<CartesianChartData> _cartesianChartData = [];
+  late CartesianPeriod selectedPeriod = CartesianPeriod.months;
 
   @override
   void initState() {
-    // TODO: make dynamic
-
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       setState(() {
         _expensesByMerchantCategory = getExpensesByMerchantCategory(
@@ -72,7 +73,7 @@ class InsightsState extends State<Insights> {
         SizedBox(height: screenHeight / 25),
         Container(
           color: Colors.white,
-          height: screenHeight / 1.5,
+          height: screenHeight / 1.4,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -98,7 +99,45 @@ class InsightsState extends State<Insights> {
                           chartData: _cartesianChartData,
                         ),
                       ),
-                      Expanded(flex: 1, child: Container())
+                      Expanded(
+                        flex: 1,
+                        child: Row(
+                          children: [
+                            Expanded(flex: 1, child: Container()),
+                            Expanded(
+                              flex: 2,
+                              child: DropdownButtonHideUnderline(
+                                child: ButtonTheme(
+                                  alignedDropdown: true,
+                                  child: DropdownButton<CartesianPeriod>(
+                                      value: selectedPeriod,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedPeriod =
+                                              value ?? CartesianPeriod.months;
+                                        });
+                                      },
+                                      items: CartesianPeriod.values
+                                          .map(
+                                            (p) => DropdownMenuItem(
+                                              child: Text(
+                                                p.getString(),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              value: p,
+                                            ),
+                                          )
+                                          .toList()),
+                                ),
+                              ),
+                            ),
+                            Expanded(flex: 1, child: Container()),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -141,52 +180,23 @@ class ExpenseByMerchantCategory implements DoughnutChartData {
 // TODO: this month, ytd,
 List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
   required BuildContext context,
-  Period period = Period.thisMonth,
+  DoughnutPeriod period = DoughnutPeriod.thisMonth,
 }) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
-  return [
-    ExpenseByMerchantCategory(
-      MerchantCategory.dining,
-      ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.dining,
-        startTs: period.getStartTimestamp(),
-        endTs: period.getEndTimestamp(),
-      ),
-    ),
-    ExpenseByMerchantCategory(
-      MerchantCategory.rideSharing,
-      ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.rideSharing,
-        startTs: period.getStartTimestamp(),
-        endTs: period.getEndTimestamp(),
-      ),
-    ),
-    ExpenseByMerchantCategory(
-      MerchantCategory.software,
-      ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.software,
-        startTs: period.getStartTimestamp(),
-        endTs: period.getEndTimestamp(),
-      ),
-    ),
-    ExpenseByMerchantCategory(
-      MerchantCategory.travel,
-      ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.travel,
-        startTs: period.getStartTimestamp(),
-        endTs: period.getEndTimestamp(),
-      ),
-    ),
-    ExpenseByMerchantCategory(
-      MerchantCategory.news,
-      ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.news,
-        startTs: period.getStartTimestamp(),
-        endTs: period.getEndTimestamp(),
-      ),
-    ),
-  ];
+  // TODO: improve
+  return MerchantCategory.values
+      .map(
+        (merchant) => ExpenseByMerchantCategory(
+          merchant,
+          ccm.getExpenseByMerchant(
+            merchantCategory: merchant,
+            startTs: period.getStartTimestamp(),
+            endTs: period.getEndTimestamp(),
+          ),
+        ),
+      )
+      .toList();
 }
 
 // // return expenses by category from November to April
@@ -194,9 +204,7 @@ List<CartesianChartData> getExpensesByMonth({required BuildContext context}) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
   return Month.values
-      .where((month) => (month == Month.nov ||
-          month == Month.dec ||
-          month == Month.jan ||
+      .where((month) => (month == Month.jan ||
           month == Month.feb ||
           month == Month.mar ||
           month == Month.apr))

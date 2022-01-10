@@ -239,12 +239,12 @@ extension TransactionListExtension on TransactionList {
   }
 }
 
-enum Period { thisMonth, ytd }
+enum DoughnutPeriod { thisMonth, ytd }
 
-extension PeriodExtension on Period {
+extension DoughnutPeriodExtension on DoughnutPeriod {
   // consider today is April 30th, 2022
   int getStartTimestamp() {
-    if (this == Period.thisMonth) {
+    if (this == DoughnutPeriod.thisMonth) {
       return DateTime(2022, 4, 1).millisecondsSinceEpoch;
     } else {
       return DateTime(2022, 1, 1).millisecondsSinceEpoch;
@@ -253,5 +253,20 @@ extension PeriodExtension on Period {
 
   int getEndTimestamp() {
     return DateTime(2022, 4, 30).millisecondsSinceEpoch;
+  }
+}
+
+enum CartesianPeriod { days, months, weeks }
+
+extension CartesianPeriodExtension on CartesianPeriod {
+  String getString() {
+    switch (this) {
+      case CartesianPeriod.days:
+        return "By Day";
+      case CartesianPeriod.months:
+        return "By Month";
+      case CartesianPeriod.weeks:
+        return "By Week";
+    }
   }
 }
