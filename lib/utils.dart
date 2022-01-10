@@ -168,9 +168,8 @@ extension TransactionListExtension on TransactionList {
   }
 
   double calculateBalance() {
-    int thisMonth = DateTime.now().month;
-    int thisYear = DateTime.now().year;
-    int ms = DateTime(thisYear, thisMonth, 1).millisecondsSinceEpoch;
+    // get balance from April of 2022
+    int ms = DateTime(2022, 4, 1).millisecondsSinceEpoch;
 
     double balance = 0;
     for (var t in transactions) {
