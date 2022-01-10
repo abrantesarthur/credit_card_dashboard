@@ -1,10 +1,12 @@
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/database/methods.dart';
+import 'package:credit_card_dashboard/models/creditCard.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:credit_card_dashboard/widgets/alertSlider.dart';
 import 'package:credit_card_dashboard/widgets/appButton.dart';
 import 'package:credit_card_dashboard/widgets/appSlider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ManageCard extends StatefulWidget {
   const ManageCard({Key? key}) : super(key: key);
@@ -41,12 +43,16 @@ class ManageCardState extends State<ManageCard> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      creditCard.maxLimit.getString(signed: false),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 36,
-                      ),
+                    Consumer<CreditCardModel>(
+                      builder: (context, ccm, _) {
+                        return Text(
+                          ccm.maxLimit.getString(signed: false),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36,
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(height: screenHeight / 25),
                     AppButton(
@@ -91,14 +97,16 @@ class ManageCardState extends State<ManageCard> {
                         children: [
                           SizedBox(
                             width: screenWidth / 18,
-                            child: Text(
-                              creditCard.creditLimit.getString(
-                                signed: false,
-                                rounded: true,
-                              ),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
+                            child: Consumer<CreditCardModel>(
+                              builder: (context, ccm, _) => Text(
+                                ccm.creditLimit.getString(
+                                  signed: false,
+                                  rounded: true,
+                                ),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           ),
@@ -157,49 +165,59 @@ class ManageCardState extends State<ManageCard> {
                           ),
                         ),
                         SizedBox(height: screenHeight / 30),
-                        AlertSlider(
-                          merchantType: MerchantCategory.travel,
-                          currentLimit: creditCard.travelLimit,
-                          maxLimit: creditCard.maxLimit,
-                          onChanged: (val) => setState(() {
-                            creditCard.travelLimit = val;
-                          }),
+                        Consumer<CreditCardModel>(
+                          builder: (context, ccm, _) => AlertSlider(
+                            merchantType: MerchantCategory.travel,
+                            currentLimit: ccm.travelLimit,
+                            maxLimit: ccm.maxLimit,
+                            onChanged: (val) => setState(() {
+                              ccm.travelLimit = val;
+                            }),
+                          ),
                         ),
                         SizedBox(height: screenHeight / 50),
-                        AlertSlider(
-                          merchantType: MerchantCategory.dining,
-                          currentLimit: creditCard.diningLimit,
-                          maxLimit: creditCard.maxLimit,
-                          onChanged: (val) => setState(() {
-                            creditCard.diningLimit = val;
-                          }),
+                        Consumer<CreditCardModel>(
+                          builder: (context, ccm, _) => AlertSlider(
+                            merchantType: MerchantCategory.dining,
+                            currentLimit: ccm.diningLimit,
+                            maxLimit: ccm.maxLimit,
+                            onChanged: (val) => setState(() {
+                              ccm.diningLimit = val;
+                            }),
+                          ),
                         ),
                         SizedBox(height: screenHeight / 50),
-                        AlertSlider(
-                          merchantType: MerchantCategory.rideSharing,
-                          currentLimit: creditCard.ridesharingLimit,
-                          maxLimit: creditCard.maxLimit,
-                          onChanged: (val) => setState(() {
-                            creditCard.ridesharingLimit = val;
-                          }),
+                        Consumer<CreditCardModel>(
+                          builder: (context, ccm, _) => AlertSlider(
+                            merchantType: MerchantCategory.rideSharing,
+                            currentLimit: ccm.ridesharingLimit,
+                            maxLimit: ccm.maxLimit,
+                            onChanged: (val) => setState(() {
+                              ccm.ridesharingLimit = val;
+                            }),
+                          ),
                         ),
                         SizedBox(height: screenHeight / 50),
-                        AlertSlider(
-                          merchantType: MerchantCategory.software,
-                          currentLimit: creditCard.softwareLimit,
-                          maxLimit: creditCard.maxLimit,
-                          onChanged: (val) => setState(() {
-                            creditCard.softwareLimit = val;
-                          }),
+                        Consumer<CreditCardModel>(
+                          builder: (context, ccm, _) => AlertSlider(
+                            merchantType: MerchantCategory.software,
+                            currentLimit: ccm.softwareLimit,
+                            maxLimit: ccm.maxLimit,
+                            onChanged: (val) => setState(() {
+                              ccm.softwareLimit = val;
+                            }),
+                          ),
                         ),
                         SizedBox(height: screenHeight / 50),
-                        AlertSlider(
-                          merchantType: MerchantCategory.news,
-                          currentLimit: creditCard.newsLimit,
-                          maxLimit: creditCard.maxLimit,
-                          onChanged: (val) => setState(() {
-                            creditCard.newsLimit = val;
-                          }),
+                        Consumer<CreditCardModel>(
+                          builder: (context, ccm, _) => AlertSlider(
+                            merchantType: MerchantCategory.news,
+                            currentLimit: ccm.newsLimit,
+                            maxLimit: ccm.maxLimit,
+                            onChanged: (val) => setState(() {
+                              ccm.newsLimit = val;
+                            }),
+                          ),
                         ),
                         SizedBox(height: screenHeight / 25),
                         AppButton(
