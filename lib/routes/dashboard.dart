@@ -84,7 +84,7 @@ class DashboardState extends State<Dashboard> {
                           height: screenHeight / 1.2,
                           child: SingleChildScrollView(
                             child: currentPage == DashboardPage.transactions
-                                ? const Transactions()
+                                ? Transactions()
                                 : currentPage == DashboardPage.manageCard
                                     ? const ManageCard()
                                     : const Insights(),

@@ -63,14 +63,18 @@ class TransactionType {
   }
 }
 
-class Transactions {
+class TransactionList {
   final List<TransactionType> transactions;
 
-  Transactions(this.transactions);
+  TransactionList(this.transactions);
 
-  factory Transactions.fromJson(List<dynamic> json) {
+  factory TransactionList.fromJson(List<dynamic> json) {
+    // convert transactions
     List<TransactionType> transactions =
         json.map((t) => TransactionType.fromJson(t)).toList();
-    return Transactions(transactions);
+
+    // sort transactions
+    transactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    return TransactionList(transactions);
   }
 }

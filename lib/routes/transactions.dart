@@ -1,12 +1,16 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
+import 'package:credit_card_dashboard/database/methods.dart';
 import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:credit_card_dashboard/widgets/transaction.dart';
 import 'package:credit_card_dashboard/widgets/transactionHeader.dart';
 import 'package:flutter/material.dart';
 
 class Transactions extends StatelessWidget {
-  const Transactions({Key? key}) : super(key: key);
+  Transactions({Key? key}) : super(key: key);
+
+  // TODO: make dynamic
+  final TransactionList tl = getTransactions();
 
   @override
   Widget build(BuildContext context) {
@@ -146,15 +150,8 @@ class Transactions extends StatelessWidget {
             children: [
               const TransactionHeader(),
               Container(height: 1, color: AppColors.background),
-              Transaction(
-                transaction: TransactionType(
-                    timestamp: 1641527612540,
-                    merchant: Merchant(
-                      type: MerchantCategory.rideSharing,
-                      name: "Uber",
-                    ),
-                    pointsEarned: 100,
-                    amount: 10.56),
+              ...tl.transactions.map(
+                (t) => Transaction(transaction: t),
               )
             ],
           ),
