@@ -94,7 +94,34 @@ class ManageCardState extends State<ManageCard> {
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),
-                      onTapCallBack: () {}, // TODO: display popup
+                      onTapCallBack: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text("Enter a value"),
+                            content: const TextField(),
+                            actions: [
+                              TextButton(
+                                child: const Text(
+                                  "cancel",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              TextButton(
+                                child: const Text(
+                                  "request",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          ),
+                        );
+                      }, // TODO: display popup
                     ),
                   ],
                 ),
