@@ -1,11 +1,11 @@
 Map<String, dynamic> creditCard = {
   "credit_limit": 9000,
   "max_limit": 12000,
-  "travel_limit": 6000,
-  "software_limit": 500,
-  "dining_limit": 2000,
-  "ridesharing_limit": 3000,
-  "news_limit": 150,
+  "travel_alert": 6000,
+  "software_alert": 500,
+  "dining_alert": 2000,
+  "ridesharing_alert": 3000,
+  "news_alert": 150,
   "transactions": [
     {
       "merchant_name": "The New York Times",

@@ -8,21 +8,21 @@ import 'package:credit_card_dashboard/utils.dart';
 class CreditCardModel extends ChangeNotifier {
   late double _creditLimit;
   late double _maxLimit;
-  late double _travelLimit;
-  late double _softwareLimit;
-  late double _diningLimit;
-  late double _ridesharingLimit;
-  late double _newsLimit;
+  late double _travelAlert;
+  late double _softwareAlert;
+  late double _diningAlert;
+  late double _ridesharingAlert;
+  late double _newsAlert;
   late List<TransactionType> _transactions;
 
   void fromCreditCardInterface(CreditCard cc) {
     _creditLimit = cc.creditLimit;
     _maxLimit = cc.maxLimit;
-    _travelLimit = cc.travelLimit;
-    _softwareLimit = cc.softwareLimit;
-    _diningLimit = cc.diningLimit;
-    _ridesharingLimit = cc.ridesharingLimit;
-    _newsLimit = cc.newsLimit;
+    _travelAlert = cc.travelAlert;
+    _softwareAlert = cc.softwareAlert;
+    _diningAlert = cc.diningAlert;
+    _ridesharingAlert = cc.ridesharingAlert;
+    _newsAlert = cc.newsAlert;
     _transactions = cc.transactions.transactions;
     notifyListeners();
   }
@@ -43,33 +43,33 @@ class CreditCardModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  double get travelLimit => _travelLimit;
-  set travelLimit(double tl) {
-    _travelLimit = tl;
+  double get travelAlert => _travelAlert;
+  set travelAlert(double tl) {
+    _travelAlert = tl;
     notifyListeners();
   }
 
-  double get softwareLimit => _softwareLimit;
-  set softwareLimit(double sl) {
-    _softwareLimit = sl;
+  double get softwareAlert => _softwareAlert;
+  set softwareAlert(double sl) {
+    _softwareAlert = sl;
     notifyListeners();
   }
 
-  double get diningLimit => _diningLimit;
-  set diningLimit(double dl) {
-    _diningLimit = dl;
+  double get diningAlert => _diningAlert;
+  set diningAlert(double dl) {
+    _diningAlert = dl;
     notifyListeners();
   }
 
-  double get ridesharingLimit => _ridesharingLimit;
-  set ridesharingLimit(double rl) {
-    _ridesharingLimit = rl;
+  double get ridesharingAlert => _ridesharingAlert;
+  set ridesharingAlert(double rl) {
+    _ridesharingAlert = rl;
     notifyListeners();
   }
 
-  double get newsLimit => _newsLimit;
-  set newsLimit(double nl) {
-    _newsLimit = nl;
+  double get newsAlert => _newsAlert;
+  set newsAlert(double nl) {
+    _newsAlert = nl;
     notifyListeners();
   }
 

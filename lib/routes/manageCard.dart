@@ -18,7 +18,16 @@ class ManageCard extends StatefulWidget {
 
 class ManageCardState extends State<ManageCard> {
   bool activateAdjustLimitButton = false;
+  bool activateAdjustAlertButton = false;
   double adjustedCreditLimit = 0;
+  double adjustedTravelAlert = 0;
+  double adjustedDiningAlert = 0;
+  double adjustedRidesharingAlert = 0;
+  double adjustedSoftwareAlert = 0;
+  double adjustedNewsAlert = 0;
+  Color appSliderColor = Colors.black;
+  bool limitAdjusted = false;
+  bool alertsAdjusted = false;
 
   @override
   void initState() {
@@ -29,6 +38,11 @@ class ManageCardState extends State<ManageCard> {
       );
       setState(() {
         adjustedCreditLimit = ccm.creditLimit;
+        adjustedTravelAlert = ccm.travelAlert;
+        adjustedDiningAlert = ccm.diningAlert;
+        adjustedRidesharingAlert = ccm.ridesharingAlert;
+        adjustedSoftwareAlert = ccm.softwareAlert;
+        adjustedNewsAlert = ccm.newsAlert;
       });
     });
     super.initState();
@@ -131,8 +145,16 @@ class ManageCardState extends State<ManageCard> {
                             builder: (context, ccm, _) => AppSlider(
                               currentLimit: adjustedCreditLimit,
                               maxLimit: ccm.maxLimit,
+                              color: appSliderColor,
                               onChanged: (val) => setState(() {
-                                activateAdjustLimitButton = true;
+                                if (val < ccm.calculateBalance()) {
+                                  activateAdjustLimitButton = false;
+                                  appSliderColor = Colors.red;
+                                } else {
+                                  activateAdjustLimitButton = true;
+                                  appSliderColor = Colors.black;
+                                }
+                                limitAdjusted = false;
                                 adjustedCreditLimit = val;
                               }),
                             ),
@@ -140,7 +162,17 @@ class ManageCardState extends State<ManageCard> {
                           SizedBox(width: screenWidth / 20),
                         ],
                       ),
-                      SizedBox(height: screenHeight / 25),
+                      SizedBox(
+                        height: screenHeight / 25,
+                        child: appSliderColor == Colors.red
+                            ? const Text(
+                                "Current limit must be above current balance!",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              )
+                            : Container(),
+                      ),
                       Consumer<CreditCardModel>(
                         builder: (context, ccm, _) => AppButton(
                           width: 200,
@@ -154,10 +186,52 @@ class ManageCardState extends State<ManageCard> {
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
-                          onTapCallBack: () {
-                            ccm.creditLimit = adjustedCreditLimit;
-                          },
+                          onTapCallBack: activateAdjustLimitButton
+                              ? () {
+                                  setState(() {
+                                    ccm.creditLimit = adjustedCreditLimit;
+                                    if (ccm.creditLimit < ccm.diningAlert) {
+                                      ccm.diningAlert = ccm.creditLimit;
+                                      adjustedDiningAlert = ccm.creditLimit;
+                                    }
+                                    if (ccm.creditLimit < ccm.travelAlert) {
+                                      ccm.travelAlert = ccm.creditLimit;
+                                      adjustedTravelAlert = ccm.creditLimit;
+                                    }
+                                    if (ccm.creditLimit <
+                                        ccm.ridesharingAlert) {
+                                      ccm.ridesharingAlert = ccm.creditLimit;
+                                      adjustedRidesharingAlert =
+                                          ccm.creditLimit;
+                                    }
+                                    if (ccm.creditLimit < ccm.newsAlert) {
+                                      ccm.newsAlert = ccm.creditLimit;
+                                      adjustedNewsAlert = ccm.creditLimit;
+                                    }
+                                    if (ccm.creditLimit < ccm.softwareAlert) {
+                                      ccm.softwareAlert = ccm.creditLimit;
+                                      adjustedSoftwareAlert = ccm.creditLimit;
+                                    }
+                                    activateAdjustLimitButton = false;
+                                    limitAdjusted = true;
+                                  });
+                                }
+                              : () {},
                         ),
+                      ),
+                      SizedBox(
+                        height: screenHeight / 25,
+                        child: limitAdjusted
+                            ? const Padding(
+                                padding: EdgeInsets.only(top: 10.0),
+                                child: Text(
+                                  "Current limit adjusted successfully!",
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              )
+                            : Container(),
                       ),
                     ],
                   ),
@@ -194,10 +268,12 @@ class ManageCardState extends State<ManageCard> {
                         Consumer<CreditCardModel>(
                           builder: (context, ccm, _) => AlertSlider(
                             merchantType: MerchantCategory.travel,
-                            currentLimit: ccm.travelLimit,
-                            maxLimit: ccm.maxLimit,
+                            currentLimit: adjustedTravelAlert,
+                            maxLimit: ccm.creditLimit,
                             onChanged: (val) => setState(() {
-                              ccm.travelLimit = val;
+                              adjustedTravelAlert = val;
+                              activateAdjustAlertButton = true;
+                              alertsAdjusted = false;
                             }),
                           ),
                         ),
@@ -205,10 +281,12 @@ class ManageCardState extends State<ManageCard> {
                         Consumer<CreditCardModel>(
                           builder: (context, ccm, _) => AlertSlider(
                             merchantType: MerchantCategory.dining,
-                            currentLimit: ccm.diningLimit,
-                            maxLimit: ccm.maxLimit,
+                            currentLimit: adjustedDiningAlert,
+                            maxLimit: ccm.creditLimit,
                             onChanged: (val) => setState(() {
-                              ccm.diningLimit = val;
+                              adjustedDiningAlert = val;
+                              activateAdjustAlertButton = true;
+                              alertsAdjusted = false;
                             }),
                           ),
                         ),
@@ -216,10 +294,12 @@ class ManageCardState extends State<ManageCard> {
                         Consumer<CreditCardModel>(
                           builder: (context, ccm, _) => AlertSlider(
                             merchantType: MerchantCategory.rideSharing,
-                            currentLimit: ccm.ridesharingLimit,
-                            maxLimit: ccm.maxLimit,
+                            currentLimit: adjustedRidesharingAlert,
+                            maxLimit: ccm.creditLimit,
                             onChanged: (val) => setState(() {
-                              ccm.ridesharingLimit = val;
+                              adjustedRidesharingAlert = val;
+                              activateAdjustAlertButton = true;
+                              alertsAdjusted = false;
                             }),
                           ),
                         ),
@@ -227,10 +307,12 @@ class ManageCardState extends State<ManageCard> {
                         Consumer<CreditCardModel>(
                           builder: (context, ccm, _) => AlertSlider(
                             merchantType: MerchantCategory.software,
-                            currentLimit: ccm.softwareLimit,
-                            maxLimit: ccm.maxLimit,
+                            currentLimit: adjustedSoftwareAlert,
+                            maxLimit: ccm.creditLimit,
                             onChanged: (val) => setState(() {
-                              ccm.softwareLimit = val;
+                              adjustedSoftwareAlert = val;
+                              activateAdjustAlertButton = true;
+                              alertsAdjusted = false;
                             }),
                           ),
                         ),
@@ -238,24 +320,54 @@ class ManageCardState extends State<ManageCard> {
                         Consumer<CreditCardModel>(
                           builder: (context, ccm, _) => AlertSlider(
                             merchantType: MerchantCategory.news,
-                            currentLimit: ccm.newsLimit,
-                            maxLimit: ccm.maxLimit,
+                            currentLimit: adjustedNewsAlert,
+                            maxLimit: ccm.creditLimit,
                             onChanged: (val) => setState(() {
-                              ccm.newsLimit = val;
+                              adjustedNewsAlert = val;
+                              activateAdjustAlertButton = true;
+                              alertsAdjusted = false;
                             }),
                           ),
                         ),
                         SizedBox(height: screenHeight / 25),
-                        AppButton(
-                          width: 200,
-                          height: 50,
-                          textData: "Set",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                        Consumer<CreditCardModel>(
+                          builder: (context, ccm, _) => AppButton(
+                            width: 200,
+                            height: 50,
+                            textData: "Set",
+                            buttonColor: activateAdjustAlertButton
+                                ? AppColors.orange
+                                : AppColors.gray,
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            onTapCallBack: () {
+                              ccm.travelAlert = adjustedTravelAlert;
+                              ccm.diningAlert = adjustedDiningAlert;
+                              ccm.newsAlert = adjustedNewsAlert;
+                              ccm.softwareAlert = adjustedSoftwareAlert;
+                              ccm.ridesharingAlert = adjustedRidesharingAlert;
+                              activateAdjustAlertButton = false;
+                              alertsAdjusted = true;
+                              setState(() {});
+                            },
                           ),
-                          onTapCallBack: () {}, // TODO: display popup
+                        ),
+                        SizedBox(
+                          height: screenHeight / 25,
+                          child: alertsAdjusted
+                              ? const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
+                                  child: Text(
+                                    "Alerts adjusted successfully!",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ),
                       ],
                     )),
@@ -270,12 +382,14 @@ class ManageCardState extends State<ManageCard> {
         SizedBox(height: screenHeight / 5),
         Align(
           alignment: Alignment.center,
-          child: AppButton(
-            width: 250,
-            height: 50,
-            iconLeft: Icons.lock_open,
-            textData: "LOCK CARD", // make dynamic
-            onTapCallBack: () {}, // TODO: substitute lock icon
+          child: Consumer<CreditCardModel>(
+            builder: (context, ccm, _) => AppButton(
+              width: 250,
+              height: 50,
+              iconLeft: Icons.lock_open,
+              textData: "LOCK CARD", // make dynamic
+              onTapCallBack: () {},
+            ),
           ),
         ),
         SizedBox(height: screenHeight / 10),

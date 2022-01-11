@@ -86,33 +86,34 @@ class CreditCard {
   final TransactionList transactions;
   double creditLimit;
   final double maxLimit;
-  double travelLimit;
-  double softwareLimit;
-  double diningLimit;
-  double ridesharingLimit;
-  double newsLimit;
+  double travelAlert;
+  double softwareAlert;
+  double diningAlert;
+  double ridesharingAlert;
+  double newsAlert;
 
   CreditCard({
     required this.transactions,
     required this.creditLimit,
     required this.maxLimit,
-    required this.travelLimit,
-    required this.softwareLimit,
-    required this.diningLimit,
-    required this.ridesharingLimit,
-    required this.newsLimit,
+    required this.travelAlert,
+    required this.softwareAlert,
+    required this.diningAlert,
+    required this.ridesharingAlert,
+    required this.newsAlert,
   });
 
   factory CreditCard.fromJson(Map<String, dynamic> json) {
+    print(json["credit_limit"]);
     return CreditCard(
       transactions: TransactionList.fromJson(json["transactions"]),
       creditLimit: json["credit_limit"],
       maxLimit: json["max_limit"],
-      travelLimit: json["travel_limit"],
-      softwareLimit: json["software_limit"],
-      diningLimit: json["dining_limit"],
-      ridesharingLimit: json["ridesharing_limit"],
-      newsLimit: json["news_limit"],
+      travelAlert: json["travel_alert"],
+      softwareAlert: json["software_alert"],
+      diningAlert: json["dining_alert"],
+      ridesharingAlert: json["ridesharing_alert"],
+      newsAlert: json["news_alert"],
     );
   }
 }
