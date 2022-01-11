@@ -203,7 +203,9 @@ class InsightsState extends State<Insights> {
                 SizedBox(height: screenHeight / 25),
                 LabelAndValue(
                   label: "Actual Average",
-                  value: getAverage(_cartesianChartData),
+                  value: cartesianPeriod == CartesianPeriod.days
+                      ? creditCardModel.calculateDailyAverageExpenses()
+                      : getAverage(_cartesianChartData),
                 ),
                 cartesianPeriod == CartesianPeriod.days
                     ? Column(
@@ -213,11 +215,6 @@ class InsightsState extends State<Insights> {
                           LabelAndValue(
                             label: "Target Average",
                             value: creditCardModel.calculateTargetAverage(),
-                          ),
-                          SizedBox(height: screenHeight / 25),
-                          LabelAndValue(
-                            label: "Days of Balance Left",
-                            value: getAverage(_cartesianChartData),
                           ),
                         ],
                       )

@@ -108,19 +108,17 @@ class CreditCardModel extends ChangeNotifier {
     return creditLimit - calculateBalance();
   }
 
-  double getAverageDailyExpenses({
-    required int startTs,
-    required int endTs,
-  }) {
+  double calculateDailyAverageExpenses() {
+    // return average expenses from April 1st to April 15th
+    int startTs = DateTime(2022, 4, 1).millisecondsSinceEpoch;
+    int endTs = DateTime(2022, 4, 15).millisecondsSinceEpoch;
     double expenses = 0;
-    int count = 0;
     for (var t in transactions) {
       if (t.timestamp > startTs && t.timestamp <= endTs) {
         expenses += t.amount;
-        count++;
       }
     }
-    return ((expenses / count) * 100).round() / 100;
+    return ((expenses / 15) * 100).round() / 100;
   }
 
   double calculateExpectedAverage(CartesianPeriod period) {
@@ -134,7 +132,10 @@ class CreditCardModel extends ChangeNotifier {
   }
 
   double calculateTargetAverage() {
-    return 0;
+    // we have 15 days left of balance
+    print(getAvailableBalance());
+    print(creditLimit);
+    return ((getAvailableBalance() / 15) * 100).round() / 100;
   }
 
   double getExpenseByMerchant({
