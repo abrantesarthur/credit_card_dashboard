@@ -1,3 +1,4 @@
+import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/models/creditCard.dart';
 import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
@@ -40,10 +41,10 @@ class InsightsState extends State<Insights> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Column(
       children: [
-        // TODO: add button to select "Current Month" or YTD
         Container(
           color: Colors.white,
           height: screenHeight / 1.5,
@@ -58,7 +59,6 @@ class InsightsState extends State<Insights> {
                     children: [
                       Expanded(
                         flex: 2,
-                        // TODO: add buttons to select thisMonth and YTD
                         child: DoughnutChart(
                           title: "Expenses by Merchant Category",
                           chartData: _doughnutChartData,
@@ -138,7 +138,6 @@ class InsightsState extends State<Insights> {
                     children: [
                       Expanded(
                         flex: 2,
-                        // TODO: add buttons to select by days and weeks
                         child: CartesianChart(
                           chartData: _cartesianChartData,
                         ),
@@ -189,6 +188,32 @@ class InsightsState extends State<Insights> {
                     ],
                   ),
                 ),
+                SizedBox(height: screenHeight / 25),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Average",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: screenWidth / 50),
+                    Text(
+                      "\$" +
+                          getAverage(_cartesianChartData)
+                              .toString()
+                              .addCommas(),
+                      style: const TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -197,6 +222,10 @@ class InsightsState extends State<Insights> {
     );
   }
 }
+
+// AVERAGE EXPENSES
+// TARGET EXPENSES
+// DAYS LEFT
 
 class ExpenseByMerchantCategory implements DoughnutChartData {
   final MerchantCategory merchantType;
@@ -225,7 +254,6 @@ class ExpenseByMerchantCategory implements DoughnutChartData {
   }
 }
 
-// TODO: this month, ytd,
 List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
   required BuildContext context,
   DoughnutPeriod period = DoughnutPeriod.thisMonth,
@@ -245,6 +273,23 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
         ),
       )
       .toList();
+}
+
+double getAverage(List<CartesianChartData> chartData) {
+  if (chartData.isEmpty) return 0;
+
+  double expenses = 0;
+  int count = 0;
+  for (var d in chartData) {
+    expenses += d.diningExpenses;
+    expenses += d.newsExpenses;
+    expenses += d.ridesharingExpenses;
+    expenses += d.softwareExpenses;
+    expenses += d.travelExpenses;
+    count += 1;
+  }
+
+  return ((expenses / count) * 100).round() / 100;
 }
 
 // return expenses by category from November to April
