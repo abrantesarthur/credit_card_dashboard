@@ -254,6 +254,15 @@ extension DoughnutPeriodExtension on DoughnutPeriod {
   int getEndTimestamp() {
     return DateTime(2022, 4, 30).millisecondsSinceEpoch;
   }
+
+  String getString() {
+    switch (this) {
+      case DoughnutPeriod.thisMonth:
+        return "This Month";
+      case DoughnutPeriod.ytd:
+        return "Year to Date";
+    }
+  }
 }
 
 enum CartesianPeriod { days, months, weeks }

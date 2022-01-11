@@ -1,14 +1,9 @@
-import 'dart:html';
-
-import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/models/creditCard.dart';
-import 'package:credit_card_dashboard/widgets/appButton.dart';
 import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
 import 'package:credit_card_dashboard/widgets/doughnutChart.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_dashboard/utils.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Insights extends StatefulWidget {
@@ -19,20 +14,22 @@ class Insights extends StatefulWidget {
 }
 
 class InsightsState extends State<Insights> {
-  late List<ExpenseByMerchantCategory> _expensesByMerchantCategory = [];
+  late List<ExpenseByMerchantCategory> _doughnutChartData = [];
   late List<CartesianChartData> _cartesianChartData = [];
-  late CartesianPeriod selectedPeriod = CartesianPeriod.months;
+  late CartesianPeriod cartesianPeriod = CartesianPeriod.months;
+  late DoughnutPeriod doughnutPeriod = DoughnutPeriod.thisMonth;
 
   @override
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       setState(() {
-        _expensesByMerchantCategory = getExpensesByMerchantCategory(
+        _doughnutChartData = getExpensesByMerchantCategory(
           context: context,
+          period: doughnutPeriod,
         );
         _cartesianChartData = getExpensesBy(
           context: context,
-          period: CartesianPeriod.months,
+          period: cartesianPeriod,
         );
       });
     });
@@ -60,13 +57,56 @@ class InsightsState extends State<Insights> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 1,
+                        flex: 2,
                         // TODO: add buttons to select thisMonth and YTD
                         child: DoughnutChart(
                           title: "Expenses by Merchant Category",
-                          chartData: _expensesByMerchantCategory,
+                          chartData: _doughnutChartData,
                         ),
                       ),
+                      Expanded(
+                          flex: 1,
+                          child: Row(
+                            children: [
+                              Expanded(flex: 1, child: Container()),
+                              Expanded(
+                                flex: 2,
+                                child: DropdownButtonHideUnderline(
+                                  child: ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButton<DoughnutPeriod>(
+                                        value: doughnutPeriod,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            doughnutPeriod = value ??
+                                                DoughnutPeriod.thisMonth;
+                                            _doughnutChartData =
+                                                getExpensesByMerchantCategory(
+                                              context: context,
+                                              period: doughnutPeriod,
+                                            );
+                                          });
+                                        },
+                                        items: DoughnutPeriod.values
+                                            .map(
+                                              (p) => DropdownMenuItem(
+                                                child: Text(
+                                                  p.getString(),
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                value: p,
+                                              ),
+                                            )
+                                            .toList()),
+                                  ),
+                                ),
+                              ),
+                              Expanded(flex: 1, child: Container()),
+                            ],
+                          ))
                     ],
                   ),
                 ),
@@ -84,7 +124,7 @@ class InsightsState extends State<Insights> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Expenses " + selectedPeriod.getString(),
+                  "Expenses " + cartesianPeriod.getString(),
                   style: const TextStyle(
                     fontFamily: "Inter",
                     fontSize: 14,
@@ -114,14 +154,14 @@ class InsightsState extends State<Insights> {
                                 child: ButtonTheme(
                                   alignedDropdown: true,
                                   child: DropdownButton<CartesianPeriod>(
-                                      value: selectedPeriod,
+                                      value: cartesianPeriod,
                                       onChanged: (value) {
                                         setState(() {
-                                          selectedPeriod =
+                                          cartesianPeriod =
                                               value ?? CartesianPeriod.months;
                                           _cartesianChartData = getExpensesBy(
                                             context: context,
-                                            period: selectedPeriod,
+                                            period: cartesianPeriod,
                                           );
                                         });
                                       },
@@ -176,7 +216,7 @@ class ExpenseByMerchantCategory implements DoughnutChartData {
 
   @override
   String getLabel() {
-    return spending.getString(signed: false, rounded: true);
+    return spending.getString(signed: false, rounded: true).addCommas();
   }
 
   @override
@@ -193,6 +233,7 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
   return MerchantCategory.values
+      .where((m) => m != MerchantCategory.generic)
       .map(
         (merchant) => ExpenseByMerchantCategory(
           merchant,
@@ -215,6 +256,10 @@ List<CartesianChartData> getExpensesBy({
 
   if (period == CartesianPeriod.weeks) {
     return [
+      [
+        DateTime(2022, 3, 25),
+        DateTime(2022, 3, 31),
+      ],
       [
         DateTime(2022, 3, 31),
         DateTime(2022, 4, 7),

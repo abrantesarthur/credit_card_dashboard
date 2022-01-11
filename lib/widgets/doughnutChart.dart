@@ -33,7 +33,7 @@ class DoughnutChart extends StatelessWidget {
       legend: Legend(
         isVisible: true,
         overflowMode: LegendItemOverflowMode.wrap,
-        position: LegendPosition.top,
+        position: LegendPosition.bottom,
         isResponsive: true,
         textStyle: const TextStyle(
           fontFamily: "Inter",
