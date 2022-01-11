@@ -8,6 +8,7 @@ import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
 import 'package:credit_card_dashboard/widgets/doughnutChart.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_dashboard/utils.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Insights extends StatefulWidget {
@@ -29,7 +30,10 @@ class InsightsState extends State<Insights> {
         _expensesByMerchantCategory = getExpensesByMerchantCategory(
           context: context,
         );
-        _cartesianChartData = getExpensesByMonth(context: context);
+        _cartesianChartData = getExpensesBy(
+          context: context,
+          period: CartesianPeriod.months,
+        );
       });
     });
 
@@ -115,6 +119,10 @@ class InsightsState extends State<Insights> {
                                         setState(() {
                                           selectedPeriod =
                                               value ?? CartesianPeriod.months;
+                                          _cartesianChartData = getExpensesBy(
+                                            context: context,
+                                            period: selectedPeriod,
+                                          );
                                         });
                                       },
                                       items: CartesianPeriod.values
@@ -199,42 +207,148 @@ List<ExpenseByMerchantCategory> getExpensesByMerchantCategory({
 }
 
 // return expenses by category from November to April
-List<CartesianChartData> getExpensesByMonth({required BuildContext context}) {
+List<CartesianChartData> getExpensesBy({
+  required BuildContext context,
+  required CartesianPeriod period,
+}) {
   CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
-  return Month.values
-      .where((month) => (month == Month.jan ||
-          month == Month.feb ||
-          month == Month.mar ||
-          month == Month.apr))
-      .map((m) {
-    return CartesianChartData(
-      label: m.getString(),
-      travelExpenses: ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.travel,
-        startTs: m.getStartTimestamp(),
-        endTs: m.getEndTimestamp(),
-      ),
-      softwareExpenses: ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.software,
-        startTs: m.getStartTimestamp(),
-        endTs: m.getEndTimestamp(),
-      ),
-      ridesharingExpenses: ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.rideSharing,
-        startTs: m.getStartTimestamp(),
-        endTs: m.getEndTimestamp(),
-      ),
-      diningExpenses: ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.dining,
-        startTs: m.getStartTimestamp(),
-        endTs: m.getEndTimestamp(),
-      ),
-      newsExpenses: ccm.getExpenseByMerchant(
-        merchantCategory: MerchantCategory.news,
-        startTs: m.getStartTimestamp(),
-        endTs: m.getEndTimestamp(),
-      ),
-    );
-  }).toList();
+  if (period == CartesianPeriod.weeks) {
+    return [
+      [
+        DateTime(2022, 3, 31),
+        DateTime(2022, 4, 7),
+      ],
+      [
+        DateTime(2022, 4, 7),
+        DateTime(2022, 4, 14),
+      ],
+      [
+        DateTime(2022, 4, 14),
+        DateTime(2022, 4, 21),
+      ],
+      [
+        DateTime(2022, 4, 21),
+        DateTime(2022, 4, 28),
+      ],
+    ]
+        .map(
+          (dates) => CartesianChartData(
+            label: dates[0].month.toString() +
+                "/" +
+                dates[0].day.toString() +
+                " to " +
+                dates[1].month.toString() +
+                "/" +
+                dates[1].day.toString(),
+            // label: DateFormat("EEEE").format(date),
+            travelExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.travel,
+              startTs: dates[0].millisecondsSinceEpoch,
+              endTs: dates[1].millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            softwareExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.software,
+              startTs: dates[0].millisecondsSinceEpoch,
+              endTs: dates[1].millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            ridesharingExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.rideSharing,
+              startTs: dates[0].millisecondsSinceEpoch,
+              endTs: dates[1].millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            diningExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.dining,
+              startTs: dates[0].millisecondsSinceEpoch,
+              endTs: dates[1].millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            newsExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.news,
+              startTs: dates[0].millisecondsSinceEpoch,
+              endTs: dates[1].millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+          ),
+        )
+        .toList();
+  } else if (period == CartesianPeriod.days) {
+    return [
+      DateTime(2022, 4, 25),
+      DateTime(2022, 4, 26),
+      DateTime(2022, 4, 27),
+      DateTime(2022, 4, 24),
+      DateTime(2022, 4, 28),
+      DateTime(2022, 4, 29),
+      DateTime(2022, 4, 30),
+    ]
+        .map(
+          (date) => CartesianChartData(
+            label: date.month.toString() + "/" + date.day.toString(),
+            // label: DateFormat("EEEE").format(date),
+            travelExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.travel,
+              startTs: date.millisecondsSinceEpoch,
+              endTs: date.millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            softwareExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.software,
+              startTs: date.millisecondsSinceEpoch,
+              endTs: date.millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            ridesharingExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.rideSharing,
+              startTs: date.millisecondsSinceEpoch,
+              endTs: date.millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            diningExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.dining,
+              startTs: date.millisecondsSinceEpoch,
+              endTs: date.millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+            newsExpenses: ccm.getExpenseByMerchant(
+              merchantCategory: MerchantCategory.news,
+              startTs: date.millisecondsSinceEpoch,
+              endTs: date.millisecondsSinceEpoch + 24 * 60 * 60 * 1000,
+            ),
+          ),
+        )
+        .toList();
+  } else if (period == CartesianPeriod.months) {
+    return Month.values
+        .where((month) => (month == Month.jan ||
+            month == Month.feb ||
+            month == Month.mar ||
+            month == Month.apr))
+        .map((m) {
+      return CartesianChartData(
+        label: m.getString(),
+        travelExpenses: ccm.getExpenseByMerchant(
+          merchantCategory: MerchantCategory.travel,
+          startTs: m.getStartTimestamp(),
+          endTs: m.getEndTimestamp(),
+        ),
+        softwareExpenses: ccm.getExpenseByMerchant(
+          merchantCategory: MerchantCategory.software,
+          startTs: m.getStartTimestamp(),
+          endTs: m.getEndTimestamp(),
+        ),
+        ridesharingExpenses: ccm.getExpenseByMerchant(
+          merchantCategory: MerchantCategory.rideSharing,
+          startTs: m.getStartTimestamp(),
+          endTs: m.getEndTimestamp(),
+        ),
+        diningExpenses: ccm.getExpenseByMerchant(
+          merchantCategory: MerchantCategory.dining,
+          startTs: m.getStartTimestamp(),
+          endTs: m.getEndTimestamp(),
+        ),
+        newsExpenses: ccm.getExpenseByMerchant(
+          merchantCategory: MerchantCategory.news,
+          startTs: m.getStartTimestamp(),
+          endTs: m.getEndTimestamp(),
+        ),
+      );
+    }).toList();
+  }
+
+  return [];
 }
