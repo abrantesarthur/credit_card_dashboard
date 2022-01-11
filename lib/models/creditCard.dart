@@ -1,5 +1,6 @@
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/database/methods.dart';
+import 'package:credit_card_dashboard/utils.dart';
 import 'package:flutter/material.dart';
 
 class CreditCardModel extends ChangeNotifier {
@@ -88,6 +89,26 @@ class CreditCardModel extends ChangeNotifier {
       }
     }
     return ((expenses / count) * 100).round() / 100;
+  }
+
+  double calculateExpectedAverage(CartesianPeriod period) {
+    if (period == CartesianPeriod.days) {
+      return ((creditLimit / 30) * 100).round() / 100;
+    }
+    if (period == CartesianPeriod.weeks) {
+      return ((creditLimit / 4) * 100).round() / 100;
+    }
+    return creditLimit;
+  }
+
+  double calculateTargetAverage(CartesianPeriod period) {
+    if (period == CartesianPeriod.days) {
+      return ((creditLimit / 30) * 100).round() / 100;
+    }
+    if (period == CartesianPeriod.weeks) {
+      return ((creditLimit / 4) * 100).round() / 100;
+    }
+    return creditLimit;
   }
 
   double getExpenseByMerchant({

@@ -1,8 +1,10 @@
 import 'package:credit_card_dashboard/colors.dart';
+import 'package:credit_card_dashboard/database/data.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/models/creditCard.dart';
 import 'package:credit_card_dashboard/widgets/cartesianChart.dart';
 import 'package:credit_card_dashboard/widgets/doughnutChart.dart';
+import 'package:credit_card_dashboard/widgets/labelAndValue.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +44,10 @@ class InsightsState extends State<Insights> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    CreditCardModel creditCardModel = Provider.of<CreditCardModel>(
+      context,
+      listen: false,
+    );
 
     return Column(
       children: [
@@ -117,7 +123,7 @@ class InsightsState extends State<Insights> {
         SizedBox(height: screenHeight / 25),
         Container(
           color: Colors.white,
-          height: screenHeight / 1.4,
+          height: screenHeight,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -189,30 +195,25 @@ class InsightsState extends State<Insights> {
                   ),
                 ),
                 SizedBox(height: screenHeight / 25),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Average",
-                      style: TextStyle(
-                        fontFamily: "Inter",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(width: screenWidth / 50),
-                    Text(
-                      "\$" +
-                          getAverage(_cartesianChartData)
-                              .toString()
-                              .addCommas(),
-                      style: const TextStyle(
-                        fontFamily: "Inter",
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+                LabelAndValue(
+                  label: "Expected Average",
+                  value:
+                      creditCardModel.calculateExpectedAverage(cartesianPeriod),
+                ),
+                SizedBox(height: screenHeight / 25),
+                LabelAndValue(
+                  label: "Actual Average",
+                  value: getAverage(_cartesianChartData),
+                ),
+                SizedBox(height: screenHeight / 25),
+                LabelAndValue(
+                  label: "Target Average",
+                  value: getAverage(_cartesianChartData),
+                ),
+                SizedBox(height: screenHeight / 25),
+                LabelAndValue(
+                  label: "Days of Balance Left",
+                  value: getAverage(_cartesianChartData),
                 ),
               ],
             ),
