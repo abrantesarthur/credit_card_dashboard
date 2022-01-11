@@ -1,3 +1,4 @@
+import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/database/methods.dart';
 import 'package:credit_card_dashboard/models/creditCard.dart';
@@ -16,10 +17,28 @@ class ManageCard extends StatefulWidget {
 }
 
 class ManageCardState extends State<ManageCard> {
+  bool activateAdjustLimitButton = false;
+  double adjustedCreditLimit = 0;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      CreditCardModel ccm = Provider.of<CreditCardModel>(
+        context,
+        listen: false,
+      );
+      setState(() {
+        adjustedCreditLimit = ccm.creditLimit;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         Container(
@@ -96,7 +115,7 @@ class ManageCardState extends State<ManageCard> {
                             width: screenWidth / 18,
                             child: Consumer<CreditCardModel>(
                               builder: (context, ccm, _) => Text(
-                                ccm.creditLimit.getString(
+                                adjustedCreditLimit.getString(
                                   signed: false,
                                   rounded: true,
                                 ),
@@ -110,10 +129,11 @@ class ManageCardState extends State<ManageCard> {
                           SizedBox(width: screenWidth / 30),
                           Consumer<CreditCardModel>(
                             builder: (context, ccm, _) => AppSlider(
-                              currentLimit: ccm.creditLimit,
+                              currentLimit: adjustedCreditLimit,
                               maxLimit: ccm.maxLimit,
                               onChanged: (val) => setState(() {
-                                ccm.creditLimit = val;
+                                activateAdjustLimitButton = true;
+                                adjustedCreditLimit = val;
                               }),
                             ),
                           ),
@@ -121,16 +141,23 @@ class ManageCardState extends State<ManageCard> {
                         ],
                       ),
                       SizedBox(height: screenHeight / 25),
-                      AppButton(
-                        width: 200,
-                        height: 50,
-                        textData: "Adjust",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                      Consumer<CreditCardModel>(
+                        builder: (context, ccm, _) => AppButton(
+                          width: 200,
+                          height: 50,
+                          textData: "Adjust",
+                          buttonColor: activateAdjustLimitButton
+                              ? AppColors.orange
+                              : AppColors.gray,
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onTapCallBack: () {
+                            ccm.creditLimit = adjustedCreditLimit;
+                          },
                         ),
-                        onTapCallBack: () {}, // TODO: display popup
                       ),
                     ],
                   ),
