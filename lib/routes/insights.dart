@@ -205,16 +205,23 @@ class InsightsState extends State<Insights> {
                   label: "Actual Average",
                   value: getAverage(_cartesianChartData),
                 ),
-                SizedBox(height: screenHeight / 25),
-                LabelAndValue(
-                  label: "Target Average",
-                  value: getAverage(_cartesianChartData),
-                ),
-                SizedBox(height: screenHeight / 25),
-                LabelAndValue(
-                  label: "Days of Balance Left",
-                  value: getAverage(_cartesianChartData),
-                ),
+                cartesianPeriod == CartesianPeriod.days
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: screenHeight / 25),
+                          LabelAndValue(
+                            label: "Target Average",
+                            value: creditCardModel.calculateTargetAverage(),
+                          ),
+                          SizedBox(height: screenHeight / 25),
+                          LabelAndValue(
+                            label: "Days of Balance Left",
+                            value: getAverage(_cartesianChartData),
+                          ),
+                        ],
+                      )
+                    : Container()
               ],
             ),
           ),
@@ -363,13 +370,13 @@ List<CartesianChartData> getExpensesBy({
         .toList();
   } else if (period == CartesianPeriod.days) {
     return [
-      DateTime(2022, 4, 25),
-      DateTime(2022, 4, 26),
-      DateTime(2022, 4, 27),
-      DateTime(2022, 4, 24),
-      DateTime(2022, 4, 28),
-      DateTime(2022, 4, 29),
-      DateTime(2022, 4, 30),
+      DateTime(2022, 4, 9),
+      DateTime(2022, 4, 10),
+      DateTime(2022, 4, 11),
+      DateTime(2022, 4, 12),
+      DateTime(2022, 4, 13),
+      DateTime(2022, 4, 14),
+      DateTime(2022, 4, 15),
     ]
         .map(
           (date) => CartesianChartData(

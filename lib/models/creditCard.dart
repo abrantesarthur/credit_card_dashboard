@@ -1,7 +1,9 @@
+import 'package:credit_card_dashboard/database/data.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/database/methods.dart';
 import 'package:credit_card_dashboard/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:credit_card_dashboard/utils.dart';
 
 class CreditCardModel extends ChangeNotifier {
   late double _creditLimit;
@@ -76,6 +78,36 @@ class CreditCardModel extends ChangeNotifier {
     fromCreditCardInterface(cc);
   }
 
+  double calculateBalance() {
+    // get balance from April of 2022
+    int ms = DateTime(2022, 4, 1).millisecondsSinceEpoch;
+
+    double balance = 0;
+    for (var t in transactions) {
+      if (t.timestamp >= ms) {
+        balance += t.amount;
+      }
+    }
+    return balance;
+  }
+
+  String calculatePoints() {
+    int points = 0;
+    for (var t in transactions) {
+      points += t.pointsEarned;
+    }
+    return points.toString().addCommas();
+  }
+
+  double calculateBalancePercentage() {
+    double balance = calculateBalance();
+    return balance / creditLimit;
+  }
+
+  double getAvailableBalance() {
+    return creditLimit - calculateBalance();
+  }
+
   double getAverageDailyExpenses({
     required int startTs,
     required int endTs,
@@ -101,14 +133,8 @@ class CreditCardModel extends ChangeNotifier {
     return creditLimit;
   }
 
-  double calculateTargetAverage(CartesianPeriod period) {
-    if (period == CartesianPeriod.days) {
-      return ((creditLimit / 30) * 100).round() / 100;
-    }
-    if (period == CartesianPeriod.weeks) {
-      return ((creditLimit / 4) * 100).round() / 100;
-    }
-    return creditLimit;
+  double calculateTargetAverage() {
+    return 0;
   }
 
   double getExpenseByMerchant({

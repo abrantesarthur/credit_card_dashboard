@@ -1,22 +1,23 @@
 import 'package:credit_card_dashboard/colors.dart';
 import 'package:credit_card_dashboard/database/interfaces.dart';
 import 'package:credit_card_dashboard/database/methods.dart';
+import 'package:credit_card_dashboard/models/creditCard.dart';
 import 'package:credit_card_dashboard/widgets/horizontalBar.dart';
 import 'package:credit_card_dashboard/widgets/transaction.dart';
 import 'package:credit_card_dashboard/widgets/transactionHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:credit_card_dashboard/utils.dart';
+import 'package:provider/provider.dart';
 
 class Transactions extends StatelessWidget {
   Transactions({Key? key}) : super(key: key);
-
-  // TODO: make dynamic
-  final CreditCard creditCard = getCreditCard();
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    CreditCardModel ccm = Provider.of<CreditCardModel>(context, listen: false);
 
     return Column(
       children: [
@@ -45,7 +46,7 @@ class Transactions extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            creditCard.transactions
+                            ccm
                                 .calculateBalance()
                                 .getString(signed: false)
                                 .addCommas(),
@@ -57,7 +58,7 @@ class Transactions extends StatelessWidget {
                           SizedBox(width: screenWidth / 100),
                           Text(
                             "Available " +
-                                creditCard
+                                ccm
                                     .getAvailableBalance()
                                     .getString(signed: false)
                                     .addCommas(),
@@ -70,7 +71,7 @@ class Transactions extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       HorizontalBar(
-                        fill: creditCard.calculateBalancePercentage(),
+                        fill: ccm.calculateBalancePercentage(),
                         width: 300,
                       ),
                     ],
@@ -121,7 +122,7 @@ class Transactions extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        creditCard.transactions.calculatePoints().toString(),
+                        ccm.calculatePoints().toString(),
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
@@ -161,7 +162,7 @@ class Transactions extends StatelessWidget {
             children: [
               const TransactionHeader(),
               Container(height: 1, color: AppColors.background),
-              ...creditCard.transactions.transactions.sublist(0, 20).map(
+              ...ccm.transactions.sublist(0, 20).map(
                     (t) => Transaction(transaction: t),
                   )
             ],

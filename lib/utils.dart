@@ -205,40 +205,6 @@ extension StringExtension on String {
   }
 }
 
-extension CreditCardExtension on CreditCard {
-  double calculateBalancePercentage() {
-    double balance = transactions.calculateBalance();
-    return balance / creditLimit;
-  }
-
-  double getAvailableBalance() {
-    return creditLimit - transactions.calculateBalance();
-  }
-}
-
-extension TransactionListExtension on TransactionList {
-  String calculatePoints() {
-    int points = 0;
-    for (var t in transactions) {
-      points += t.pointsEarned;
-    }
-    return points.toString().addCommas();
-  }
-
-  double calculateBalance() {
-    // get balance from April of 2022
-    int ms = DateTime(2022, 4, 1).millisecondsSinceEpoch;
-
-    double balance = 0;
-    for (var t in transactions) {
-      if (t.timestamp >= ms) {
-        balance += t.amount;
-      }
-    }
-    return balance;
-  }
-}
-
 enum DoughnutPeriod { thisMonth, ytd }
 
 extension DoughnutPeriodExtension on DoughnutPeriod {
