@@ -285,7 +285,7 @@ class ManageCardState extends State<ManageCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Manage Alerts",
+                          "Set Spending Alerts",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
